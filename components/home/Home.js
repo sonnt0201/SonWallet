@@ -5,13 +5,13 @@ import { InputField } from "./InputField";
 import { withTheme } from "react-native-paper";
 import { Categories } from "./Categories";
 import { QuickTags } from "./QuickTags";
+import { globalTheme } from "../../App";
 
 const styles = StyleSheet.create({
   home: {
-    width: 400,
+    // width: 400,
     flexDirection: "column",
-    margin: 5,
-    // backgroundColor: ThemeProvider.
+    
   },
   
   guide : {
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
     // height: 20,
     paddingHorizontal: 20,
-    width: 400,
-    color: "red"
+    // width: 400,
+
   }
 })
 
