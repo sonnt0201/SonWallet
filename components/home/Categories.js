@@ -25,7 +25,7 @@ export const Categories = () => {
         </View>
         <View style={[styles.buttonContainer]}>
           <Button mode="outlined" onPress={() => {}}>
-            Thêm
+            Thêm tiền
           </Button>
         </View>
 

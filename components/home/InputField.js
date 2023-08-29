@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
 export const InputField = () => {
   return (
     <View style={[styles.container]}>
+      
       <View
         key={"title-container"}
         style={[styles.inputContainer, styles.titleContainer]}
