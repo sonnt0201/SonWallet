@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
   categories: {
     flexDirection: "column",
     height: 120,
+    marginTop: 20,
   },
   row: { flex: 1, flexDirection: "row" },
   buttonContainer: { flex: 1, marginHorizontal: 8, },

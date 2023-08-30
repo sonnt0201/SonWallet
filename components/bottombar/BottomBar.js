@@ -6,13 +6,18 @@ import { Text, BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Home } from "../home/Home";
 import { globalTheme } from "../../App";
-
+import { CommonActions } from "@react-navigation/native";
+import { HistoryPage } from "../history";
+import { LoanPage } from "../loan/LoanPage";
 const Tab = createBottomTabNavigator();
 
 export function BottomBar() {
   return (
     // <View style={[styles.container]}>
     <Tab.Navigator
+
+   
+
       screenOptions={{
         headerShown: false,
       }}
@@ -62,22 +67,47 @@ export function BottomBar() {
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Trang chủ",
           tabBarIcon: ({ color, size }) => {
             return <Icon name="home" size={size} color={color} />;
           },
         }}
       />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
+
+<Tab.Screen
+        name="History"
+        component={HistoryPage}
         options={{
-          tabBarLabel: "Settings",
+          tabBarLabel: "Lịch sử",
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="cog" size={size} color={color} />;
+            return <Icon name="history" size={size} color={color} />;
           },
         }}
       />
+
+      <Tab.Screen
+        name="Loan"
+        component={LoanPage}
+        options={{
+          tabBarLabel: "Vay nợ",
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="hand-coin" size={size} color={color} />;
+          },
+        }}
+      />
+
+<Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarLabel: "Cài đặt",
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="cogs" size={size} color={color} />;
+          },
+        }}
+      />
+
+      
     </Tab.Navigator>
     // </View>
   );

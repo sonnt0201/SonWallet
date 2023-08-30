@@ -1,28 +1,28 @@
 import { View, StyleSheet } from "react-native";
-import { DefaultTheme, TextInput } from "react-native-paper";
+import { DefaultTheme, TextInput, HelperText } from "react-native-paper";
 import { Text } from "react-native-paper";
 import { useState } from "react";
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
-    marginTop: 20,
+    marginTop: 2,
     flexDirection: "row",
-    height: 80,
+    // height: 80,
   },
   inputContainer: {
     // for all container that contain an input field
     justifyContent: "space-between",
     // borderColor: "red",
     // borderWidth: 1,
-    margin: 2,
+    marginHorizontal: 2,
   },
   titleContainer: {
-    flex: 4,
+    flex: 5,
   },
 
   costContainer: {
-    flex: 2,
+    flex: 3,
   },
 
   kdongtag: {
@@ -34,15 +34,36 @@ const styles = StyleSheet.create({
   },
 });
 
-export const InputField = () => {
+export const InputField = ({
+  
+  inputRef,
+  title,
+  setTitle,
+  cost,
+  setCost,
+}) => {
+
+ 
+
   return (
     <View style={[styles.container]}>
-      
       <View
         key={"title-container"}
         style={[styles.inputContainer, styles.titleContainer]}
       >
-        <TextInput autoComplete="off" maxLength={40} label={"Nội dung"} />
+        <TextInput
+          autoComplete="off"
+          maxLength={40}
+          label={"Tên giao dịch"}
+          autoFocus={true}
+          ref={inputRef}
+          value={title}
+          multiline
+          onChangeText={text => {
+            setTitle(text)
+            console.log(text)
+          }}
+        />
       </View>
 
       <View
@@ -54,11 +75,18 @@ export const InputField = () => {
           autoComplete="off"
           placeholder="Số tiền"
           keyboardType="numeric"
+          value={cost}
+          onChangeText={num => {
+            setCost(num)
+            console.log(num)
+          }}
         />
       </View>
-      <View key={"kdong-tag-container"} style={[styles.kdongtag]} >
-        <Text >.000đ</Text>
+      <View key={"kdong-tag-container"} style={[styles.kdongtag]}>
+        <Text>,000đ</Text>
       </View>
+
+      
     </View>
   );
 };
