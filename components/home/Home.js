@@ -8,10 +8,8 @@ import {
 } from "react-native-paper";
 import { useState, useRef } from "react";
 import { InputField } from "./InputField";
-import { withTheme } from "react-native-paper";
 import { Categories } from "./Categories";
 import { QuickTags } from "./QuickTags";
-import { globalTheme } from "../../App";
 import { TextHelperContainer } from "./TextHelperContainer";
 
 const styles = StyleSheet.create({

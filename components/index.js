@@ -1,3 +1,4 @@
-import { Home } from "./home/Home";
-
-export {Home}
+import { Home } from "./home";
+import {LoanPage} from "./loan"
+import {HistoryPage} from "./history"
+export {Home, LoanPage, HistoryPage}

@@ -4,19 +4,15 @@ import { View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { Home } from "../home/Home";
-import { globalTheme } from "../../App";
+import {Home, HistoryPage, LoanPage} from "./components"
 import { CommonActions } from "@react-navigation/native";
-import { HistoryPage } from "../history";
-import { LoanPage } from "../loan/LoanPage";
+
 const Tab = createBottomTabNavigator();
 
 export function BottomBar() {
   return (
     // <View style={[styles.container]}>
     <Tab.Navigator
-
-   
 
       screenOptions={{
         headerShown: false,

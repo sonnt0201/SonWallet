@@ -24,11 +24,7 @@ action = {
 const moneyReducer = (money, action) => {
   switch (action.type) {
     case MoneyActions.ADD_TRADE:
-      const newTradeID = money.latestTradeID + 1;
-      money[newTradeID] = action.trade ;
-      if (action.trade.isMoneySubtraction){
-        money.wallets[0] = action.trade.balance;
-      }
+      
     break;
     
     default: break
