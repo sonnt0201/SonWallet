@@ -1,12 +1,12 @@
 import { createContext, useContext, useReducer } from "react";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const MoneyContext = createContext();
 
 /*
 const object = {
   wallets : [123],
   walletsNames: ["wallet"],
-  latestTradeID: 12,
+  lastTradeID: 12,
   0: "a",
   1: "f",
   2: "g",
@@ -21,23 +21,7 @@ action = {
 */
 
 // TO-DO: when implementing multi-wallet, change array index 0 into action.trade.walletID
-const moneyReducer = (money, action) => {
-  switch (action.type) {
-    case MoneyActions.ADD_TRADE:
-      
-    break;
-    
-    default: break
-  }
-};
 
-export const useMoney = () => useContext(MoneyContext)
-
-export const MoneyProvider = ({ children }) => {
-  const [money, dispatchMoney] = useReducer(moneyReducer, moneyInit);
-
-  return <MoneyContext.Provider value={[money, dispatchMoney]}>{children}</MoneyContext.Provider>;
-};
 
 export class Trade {
   constructor({
@@ -46,7 +30,7 @@ export class Trade {
     date,
     isMoneySubtraction,
     isDebt,
-    walletID,
+   
     balance,
   }) {
     this.title = title;
@@ -54,7 +38,7 @@ export class Trade {
     this.date = date;
     this.isMoneySubtraction = isMoneySubtraction;
     this.isDebt = isDebt;
-    this.walletID = walletID;
+    
     this.balance = balance;
   }
 }

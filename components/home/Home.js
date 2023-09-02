@@ -72,7 +72,7 @@ export const Home = () => {
       />
 
       <TextHelperContainer title={title} cost={cost}/>
-      <Categories />
+      <Categories  title={title} cost={cost}/>
       <QuickTags />
     </View>
   );

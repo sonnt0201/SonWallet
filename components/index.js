@@ -1,4 +1,5 @@
 import { Home } from "./home";
 import {LoanPage} from "./loan"
 import {HistoryPage} from "./history"
-export {Home, LoanPage, HistoryPage}
+import { StoresProvider } from "./stores";
+export {Home, LoanPage, HistoryPage,StoresProvider}
