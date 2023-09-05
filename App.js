@@ -24,7 +24,7 @@ import { initStorage, traceData } from "./utils";
     // ,
   },
 };
-// initStorage()
+initStorage()
 AsyncStorage.setItem("0", JSON.stringify(0))
 
 export default function App() {

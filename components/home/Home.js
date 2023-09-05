@@ -13,7 +13,7 @@ import { QuickTags } from "./QuickTags";
 import { TextHelperContainer } from "./TextHelperContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDataNum } from "../stores";
-
+import { traceData } from "../../utils";
 const styles = StyleSheet.create({
   home: {
     paddingBottom: 0,
@@ -34,30 +34,59 @@ export const Home = () => {
   const [cost, setCost] = useState("");
   const [money, setMoney] = useState("0");
   const inputRef = useRef(null);
-  const [balanceVisible, setBalanceVisible] =  useState();
+  const [balanceVisible, setBalanceVisible] = useState();
   const [dataNum, setDataNum] = useDataNum();
 
   const toggleBalanceVisible = () => {
     setBalanceVisible((prev) => !prev);
   };
 
-  
-    
-  useEffect(() => {
-    AsyncStorage.getItem("0").then((result) => result && setMoney(result));
-    console.log("changed " + dataNum)
-    // getMoneyFromStorage();
-  }, [dataNum]);
+  const storeTrade = ({ isMoneySubtraction, isDebt }) =>
+    title &&
+    cost &&
+    AsyncStorage.getItem("0").then((result) => {
+      setCost(prev => cost.replace(/,/g, ""));
+      let balance = Number(JSON.parse(result));
+
+      balance = isMoneySubtraction ? balance - Number(cost) : balance + Number(cost);
+
+      // lưu số tiền mới
+      AsyncStorage.setItem("0", JSON.stringify(balance));
+      setMoney(balance);
+
+      const currentDate = new Date();
+      AsyncStorage.setItem(
+        JSON.stringify(dataNum),
+        JSON.stringify({
+          title,
+          cost,
+          isMoneySubtraction,
+          isDebt,
+          time: new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate()
+          ),
+          balance: balance,
+        })
+      ).then(() => {
+        setDataNum(prev => prev + 1)
+        traceData();
+        
+      });
+    });
+
+ 
 
   useEffect(() => {
-    
-    // getMoneyFromStorage();
+    AsyncStorage.getItem("0").then(result => {
+      setMoney(result)
+    })
   }, []);
 
   return (
     <View style={[styles.home]}>
       <Appbar.Header>
-     
         <Appbar.Action icon="wallet" />
         <Appbar.Content
           title={money.toString()}
@@ -89,7 +118,7 @@ export const Home = () => {
       />
 
       <TextHelperContainer title={title} cost={cost} />
-      <Categories title={title} cost={cost} />
+      <Categories title={title} cost={cost} storeTrade = {storeTrade} />
       <QuickTags />
     </View>
   );

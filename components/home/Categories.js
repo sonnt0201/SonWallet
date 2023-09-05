@@ -8,7 +8,7 @@ import {
   useDataNum,
   useLatestTradeID,
 } from "../stores";
-import { initStorage, storeTrade, traceData } from "../../utils";
+// import { initStorage, traceData } from "../../utils";
 
 const styles = StyleSheet.create({
   categories: {
@@ -20,9 +20,11 @@ const styles = StyleSheet.create({
   buttonContainer: { flex: 1, marginHorizontal: 8 },
 });
 
-export const Categories = ({ title, cost }) => {
+export const Categories = ({ title, cost, storeTrade }) => {
   const [dataNum, setDataNum] = useDataNum();
+
   
+
   return (
     <View style={[styles.categories]}>
       <View style={[styles.row]}>
@@ -31,14 +33,12 @@ export const Categories = ({ title, cost }) => {
             mode="contained"
             onPress={() => {
               storeTrade({
-                id: dataNum,
-                title: title,
-                cost: cost,
+             
                 isMoneySubtraction: true,
                 isDebt: false,
               });
 
-              setDataNum((prev) => prev + 1);
+              
               console.log("TAP TAP TAP !!!");
             }}
           >
@@ -50,13 +50,11 @@ export const Categories = ({ title, cost }) => {
             mode="outlined"
             onPress={() => {
               storeTrade({
-                id: dataNum,
-                title: title,
-                cost: cost,
+               
                 isMoneySubtraction: false,
                 isDebt: false,
               });
-              setDataNum((prev) => prev + 1);
+              
             }}
           >
             Thêm tiền
@@ -70,14 +68,12 @@ export const Categories = ({ title, cost }) => {
             mode="outlined"
             onPress={() => {
               storeTrade({
-                id: dataNum,
-                title: title,
-                cost: cost,
+               
                 isMoneySubtraction: true,
                 isDebt: true,
               });
 
-              setDataNum((prev) => prev + 1);
+             
             }}
           >
             Cho vay
@@ -88,14 +84,12 @@ export const Categories = ({ title, cost }) => {
             mode="outlined"
             onPress={() => {
               storeTrade({
-                id: dataNum,
-                title: title,
-                cost: cost,
+               
                 isMoneySubtraction: false,
                 isDebt: true,
               });
 
-              setDataNum((prev) => prev + 1);
+              
             }}
           >
             Vay
