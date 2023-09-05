@@ -11,7 +11,7 @@ import { StoresProvider } from "./components";
 import { MoneyListener } from "./MoneyListener";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
-import { traceData } from "./utils";
+import { initStorage, traceData } from "./utils";
 
 
  const globalTheme = {
@@ -24,14 +24,15 @@ import { traceData } from "./utils";
     // ,
   },
 };
-
-
+// initStorage()
+AsyncStorage.setItem("0", JSON.stringify(0))
 
 export default function App() {
   // kiểm tra
   useEffect(() => {
     traceData()
   },[])
+
   return (
     <NavigationContainer>
     <PaperProvider theme={globalTheme}>

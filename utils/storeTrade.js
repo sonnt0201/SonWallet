@@ -1,37 +1,32 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Trade } from "../components/stores"
+import { Trade } from "../components/stores";
 import { traceData } from "./traceData";
 
-export const storeTrade = async({id, title, cost, isMoneySubtraction, isDebt}) => {
+export const storeTrade = ({ id, title, cost, isMoneySubtraction, isDebt }) =>
+ (title && cost) && AsyncStorage.getItem("0").then((result) => {
+    cost = cost.replace(/,/g, '')
+    let money = Number(JSON.parse(result));
 
-    try {
-         // lấy date hiện tại
-    const currentDate =new Date();
-    const dateSaved = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
-    // lấy ví hiện tại
-    const currentWallet = await JSON.parse(AsyncStorage.getItem("wallet"));
-    console.log("currentWallet " + JSON.stringify(currentWallet))
-    // tính số dư
-    const balance = isMoneySubtraction ? (currentWallet - cost) : (currentWallet + cost)
-    // lưu wallet mới
-    await AsyncStorage.setItem("wallet",JSON.stringify(balance) );
-    // tạo trade mới
-    const trade = new Trade({
-        title: title,
-        cost: cost,
-        date: dateSaved,
-        isMoneySubtraction: isMoneySubtraction,
-        balance: balance,
-        isDebt: isDebt
-    })
-    // lưu trade
-    AsyncStorage.setItem(JSON.stringify(id),JSON.stringify(trade));
+    money = isMoneySubtraction ? money - Number(cost) : money + Number(cost);
 
-    // kiem tra
-    traceData();
-    } catch (error ) {
-        console.log("error in storing " )
-    }
-
-   
-}
+    // lưu số tiền mới
+    AsyncStorage.setItem("0", JSON.stringify(money));
+    const currentDate = new Date();
+    AsyncStorage.setItem(
+      JSON.stringify(id),
+      JSON.stringify({
+        title,
+        cost,
+        isMoneySubtraction,
+        isDebt,
+        time: new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          currentDate.getDate()
+        ),
+        balance: money,
+      })
+    ).then(() => {
+      traceData();
+    });
+  });

@@ -1,7 +1,8 @@
 import { View, StyleSheet } from "react-native";
-import { DefaultTheme, TextInput, HelperText } from "react-native-paper";
+import { DefaultTheme, TextInput, HelperText, Button } from "react-native-paper";
 import { Text } from "react-native-paper";
 import { useState } from "react";
+import { themeColor } from "../../constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -26,11 +27,14 @@ const styles = StyleSheet.create({
   },
 
   kdongtag: {
-    // color: DefaultTheme.colors.primary,
+    color: DefaultTheme.colors.primary,
     flex: 1,
     alignItems: "center",
     flexDirection: "row",
     marginLeft: 1,
+    borderWidth: 2,
+    borderColor: themeColor,
+    borderRadius: 20,
   },
 });
 
@@ -82,8 +86,13 @@ export const InputField = ({
           }}
         />
       </View>
-      <View key={"kdong-tag-container"} style={[styles.kdongtag]}>
-        <Text>,000đ</Text>
+      <View key={"kdong-tag-container"}
+       style={[styles.kdongtag]} 
+       onTouchEnd={() => {
+        setCost(prev => (prev + "000"))
+       }}
+       >
+        <Text>?000</Text>
       </View>
 
       

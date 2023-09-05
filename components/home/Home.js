@@ -6,11 +6,13 @@ import {
   Appbar,
   HelperText,
 } from "react-native-paper";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { InputField } from "./InputField";
 import { Categories } from "./Categories";
 import { QuickTags } from "./QuickTags";
 import { TextHelperContainer } from "./TextHelperContainer";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDataNum } from "../stores";
 
 const styles = StyleSheet.create({
   home: {
@@ -30,20 +32,35 @@ const styles = StyleSheet.create({
 export const Home = () => {
   const [title, setTitle] = useState("");
   const [cost, setCost] = useState("");
+  const [money, setMoney] = useState("0");
   const inputRef = useRef(null);
-  const [balanceVisible, setBalanceVisible] = useState(false);
- 
+  const [balanceVisible, setBalanceVisible] =  useState();
+  const [dataNum, setDataNum] = useDataNum();
 
-  toggleBalanceVisible = () => {
+  const toggleBalanceVisible = () => {
     setBalanceVisible((prev) => !prev);
   };
+
+  
+    
+  useEffect(() => {
+    AsyncStorage.getItem("0").then((result) => result && setMoney(result));
+    console.log("changed " + dataNum)
+    // getMoneyFromStorage();
+  }, [dataNum]);
+
+  useEffect(() => {
+    
+    // getMoneyFromStorage();
+  }, []);
+
   return (
     <View style={[styles.home]}>
       <Appbar.Header>
-        {/* <Appbar.BackAction  /> */}
+     
         <Appbar.Action icon="wallet" />
         <Appbar.Content
-          title={balanceVisible ? "Số dư" : "Hiện số dư"}
+          title={money.toString()}
           onPress={toggleBalanceVisible}
         />
         <Appbar.Action
@@ -71,8 +88,8 @@ export const Home = () => {
         setCost={setCost}
       />
 
-      <TextHelperContainer title={title} cost={cost}/>
-      <Categories  title={title} cost={cost}/>
+      <TextHelperContainer title={title} cost={cost} />
+      <Categories title={title} cost={cost} />
       <QuickTags />
     </View>
   );

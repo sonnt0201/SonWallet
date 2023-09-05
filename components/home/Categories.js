@@ -2,7 +2,12 @@ import { View, StyleSheet } from "react-native";
 import { Button, Text } from "react-native-paper";
 // import { blue100 } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { LatestTradeIDActions, Trade, useLatestTradeID } from "../stores";
+import {
+  LatestTradeIDActions,
+  Trade,
+  useDataNum,
+  useLatestTradeID,
+} from "../stores";
 import { initStorage, storeTrade, traceData } from "../../utils";
 
 const styles = StyleSheet.create({
@@ -16,28 +21,8 @@ const styles = StyleSheet.create({
 });
 
 export const Categories = ({ title, cost }) => {
-  const [latestTradeID, setLatestTradeID] = useLatestTradeID();
-
-  const addTrade = async () => {
-    await storeTrade({
-      id: latestTradeID + 1,
-      title: title,
-      cost: cost,
-      isMoneySubtraction: true,
-      isDebt: false
-    })
-
-    setLatestTradeID((prev) => (prev + 1))
-  }
-
-  const remove = async() => {
-    // await initStorage();
-    AsyncStorage.multiRemove(await AsyncStorage.getAllKeys());
-    await AsyncStorage.multiSet([["wallet", JSON.stringify(1000)],[ "latestTradeID",JSON.stringify(0)]])
-    setLatestTradeID(0);
-    traceData()
-  }
-
+  const [dataNum, setDataNum] = useDataNum();
+  
   return (
     <View style={[styles.categories]}>
       <View style={[styles.row]}>
@@ -45,18 +30,35 @@ export const Categories = ({ title, cost }) => {
           <Button
             mode="contained"
             onPress={() => {
-             
-              addTrade()
-               console.log("TAP TAP TAP !!!")
-               
-              
-            } }
+              storeTrade({
+                id: dataNum,
+                title: title,
+                cost: cost,
+                isMoneySubtraction: true,
+                isDebt: false,
+              });
+
+              setDataNum((prev) => prev + 1);
+              console.log("TAP TAP TAP !!!");
+            }}
           >
             Chi trả
           </Button>
         </View>
         <View style={[styles.buttonContainer]}>
-          <Button mode="outlined" onPress={() => {}}>
+          <Button
+            mode="outlined"
+            onPress={() => {
+              storeTrade({
+                id: dataNum,
+                title: title,
+                cost: cost,
+                isMoneySubtraction: false,
+                isDebt: false,
+              });
+              setDataNum((prev) => prev + 1);
+            }}
+          >
             Thêm tiền
           </Button>
         </View>
@@ -64,15 +66,38 @@ export const Categories = ({ title, cost }) => {
 
       <View style={[styles.row]}>
         <View style={[styles.buttonContainer]}>
-          <Button mode="outlined" onPress={() => {}}>
+          <Button
+            mode="outlined"
+            onPress={() => {
+              storeTrade({
+                id: dataNum,
+                title: title,
+                cost: cost,
+                isMoneySubtraction: true,
+                isDebt: true,
+              });
+
+              setDataNum((prev) => prev + 1);
+            }}
+          >
             Cho vay
           </Button>
         </View>
         <View style={[styles.buttonContainer]}>
-          <Button mode="outlined" onPress={() => {
-            remove()
+          <Button
+            mode="outlined"
+            onPress={() => {
+              storeTrade({
+                id: dataNum,
+                title: title,
+                cost: cost,
+                isMoneySubtraction: false,
+                isDebt: true,
+              });
 
-          }}>
+              setDataNum((prev) => prev + 1);
+            }}
+          >
             Vay
           </Button>
         </View>

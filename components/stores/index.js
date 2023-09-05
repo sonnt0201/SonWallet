@@ -1,10 +1,10 @@
-import { LatestTradeIDProvider,LatestTradeIDActions, useLatestTradeID } from "./latestTradeID"
-import { Trade } from "./money"
-export {LatestTradeIDActions, useLatestTradeID, Trade} 
+import { useDataNum, DataProvider } from "./data"
 export const StoresProvider = ({children}) => {
     return (
-        <LatestTradeIDProvider>
+        <DataProvider>
             {children}
-        </LatestTradeIDProvider>
+        </DataProvider>
     )
 }
+
+export {useDataNum}

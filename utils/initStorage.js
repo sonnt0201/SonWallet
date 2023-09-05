@@ -4,7 +4,6 @@ import { traceData } from "./traceData";
 
 export const initStorage = async() => {
     await AsyncStorage.multiRemove(await AsyncStorage.getAllKeys());
-
-    // await AsyncStorage.multiSet([["wallet", "1000"],[ "latestTradeID","0"]])
+    
     traceData()
 }
