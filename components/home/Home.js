@@ -83,7 +83,11 @@ export const Home = () => {
       setMoney(result)
     })
   }, []);
-
+  useEffect(() => {
+    AsyncStorage.getItem("0").then(result => {
+      setMoney(result)
+    })
+  }, [dataNum]);
   return (
     <View style={[styles.home]}>
       <Appbar.Header>

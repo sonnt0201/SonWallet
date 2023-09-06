@@ -12,6 +12,9 @@ export const LoanList = () => {
 
   return (
     <List.Section  title="Lịch sử giao dịch" style={[styles.historyPage]} theme={DefaultTheme}>
+      
+     
+
       <List.Accordion
         title="Uncontrolled Accordion"
         left={props => <List.Icon {...props} icon="account-cash" />}>

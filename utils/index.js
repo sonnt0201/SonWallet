@@ -1,3 +1,4 @@
 export {traceData} from "./traceData"
-export {storeTrade} from "./storeTrade"
 export {initStorage} from "./initStorage"
+export {isSameDate} from "./isSameDate"
+export {addCommasToNum} from "./addCommasToNum"
