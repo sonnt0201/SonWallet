@@ -14,6 +14,8 @@ import { TextHelperContainer } from "./TextHelperContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDataNum } from "../stores";
 import { traceData } from "../../utils";
+import { useNavigation } from '@react-navigation/native';
+
 const styles = StyleSheet.create({
   home: {
     paddingBottom: 0,
@@ -36,7 +38,7 @@ export const Home = () => {
   const inputRef = useRef(null);
   const [balanceVisible, setBalanceVisible] = useState();
   const [dataNum, setDataNum] = useDataNum();
-
+  const navigation = useNavigation();
   const toggleBalanceVisible = () => {
     setBalanceVisible((prev) => !prev);
   };
@@ -71,6 +73,7 @@ export const Home = () => {
         })
       ).then(() => {
         setDataNum(prev => prev + 1)
+        navigation.navigate("History")
         traceData();
         
       });
