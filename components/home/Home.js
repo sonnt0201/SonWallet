@@ -1,4 +1,4 @@
-import { Keyboard, StyleSheet, View } from "react-native";
+import { Keyboard, StyleSheet, View, ScrollView } from "react-native";
 import {
   DefaultTheme,
   Text,
@@ -9,7 +9,7 @@ import {
 import { useState, useRef, useEffect } from "react";
 import { InputField } from "./InputField";
 import { Categories } from "./Categories";
-import { QuickTags } from "./QuickTags";
+import { QuickTags } from "./quicktags-components";
 import { TextHelperContainer } from "./TextHelperContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDataNum } from "../stores";
@@ -83,7 +83,7 @@ export const Home = () => {
 
   
   return (
-    <View style={[styles.home]}>
+    <ScrollView style={[styles.home]}>
      
       <View style={[styles.guide]}>
         <Text
@@ -108,6 +108,6 @@ export const Home = () => {
       <TextHelperContainer title={title} cost={cost} />
       <Categories title={title} cost={cost} storeTrade = {storeTrade} />
       <QuickTags />
-    </View>
+    </ScrollView>
   );
 };

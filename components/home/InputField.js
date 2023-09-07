@@ -45,6 +45,7 @@ export const InputField = ({
   setTitle,
   cost,
   setCost,
+  labelForTextInput
 }) => {
 
  
@@ -58,7 +59,7 @@ export const InputField = ({
         <TextInput
           autoComplete="off"
           maxLength={40}
-          label={"Tên giao dịch"}
+          label={labelForTextInput? labelForTextInput: "Tên giao dịch"}
           autoFocus={true}
           ref={inputRef}
           value={title}

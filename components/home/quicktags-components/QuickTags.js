@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import {
   Avatar,
@@ -8,7 +9,11 @@ import {
   Chip,
   Surface,
   IconButton,
+  FAB,
+  Modal,
 } from "react-native-paper";
+
+import { InputModal } from "./InputModal";
 
 styles = StyleSheet.create({
   quickTags: {
@@ -22,40 +27,40 @@ styles = StyleSheet.create({
   chipContainer: {
     padding: 5,
     flexDirection: "row",
-    justifyContent:"flex-start",
+    justifyContent: "flex-start",
     // alignItems: "center",
     height: "100%",
 
     flexWrap: "wrap",
     gap: 10,
   },
-  chip: {
-    
-    
-    
-    
-  },
 });
 
 export const QuickTags = () => {
+  const [tags, setTags] = useState([]);
+  const [inputVisible, setInputVisible] = useState(false);
+
+  const addTag = ({ title, cost, isSubtraction }) =>
+    setTags((prev) => [...prev, { title, cost, isSubtraction }]);
   _removeChip = () => {};
 
   return (
     <Surface styles={[styles.quickTags]} elevation={5}>
+     
       <View style={[styles.title]}>
         <Text icon="tags-mutiple">QuickTags</Text>
       </View>
-      <View style={[styles.chipContainer]}>
+      {inputVisible && <InputModal/>}
+      <View key={"add-tag"} style={[styles.chipContainer]}>
         <View style={[styles.chip]}>
           <Chip
-            icon="tag"
-            onPress={() => console.log("Pressed")}
-            onClose={() => {
-              _removeChip();
+            icon={inputVisible? "pencil-remove":"plus"}
+            onPress={() => {
+              setInputVisible(!inputVisible);
+              console.log(inputVisible);
             }}
-            // style={[styles.chip]}
           >
-            Example Chip
+            { inputVisible ? "Hủy thêm" : "Thêm tag"}
           </Chip>
         </View>
 
@@ -70,7 +75,8 @@ export const QuickTags = () => {
           >
             Example Chip
           </Chip>
-        </View><View style={[styles.chip]}>
+        </View>
+        <View style={[styles.chip]}>
           <Chip
             icon="tag"
             onPress={() => console.log("Pressed")}
@@ -82,7 +88,6 @@ export const QuickTags = () => {
             Example Chip
           </Chip>
         </View>
-
       </View>
     </Surface>
   );

@@ -3,9 +3,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDataNum } from "../stores";
 import { useEffect, useState } from "react";
 import { List, Text } from "react-native-paper";
-import { addCommasToNum, isSameDate, traceData } from "../../utils";
-export const Today = ({date}) => {
-  const [dataNum, setDataNum] = useDataNum();
+import { addCommasToNum, isSameDate,  } from "../../utils";
+import { formatDate } from "../../utils";
+export const DayList = ({date}) => {
+  const [dataNum, ] = useDataNum();
   const [arr, setArr] = useState([]);
   
 
@@ -53,13 +54,13 @@ export const Today = ({date}) => {
             
           />
         );
-    });
+    }).reverse();
 
  
 
   return (
     <List.Section
-      title=""
+      title={formatDate(date)}
       expanded
       left={(props) => <List.Icon {...props} icon="folder" />}
     >

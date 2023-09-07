@@ -47,7 +47,7 @@ export const Today = () => {
   }
 
   const getList = () =>
-    arr.map((pair, index) => {
+    arr.map((pair, index, arr) => {
       const trade = JSON.parse(pair[1]);
       const time = new Date(trade.time);
       
@@ -63,7 +63,7 @@ export const Today = () => {
             style = {styleForLatestItem(index)}
           />
         );
-    });
+    }).reverse();
 
   const removeLatest = () => {
     if (dataNum <= 2) return;
@@ -85,12 +85,13 @@ export const Today = () => {
       title="Hôm nay"
       
     >
-      {getList()}
       <List.Item
         title="Xóa giao dịch mới nhất"
         right={(props) => <List.Icon {...props} icon="trash-can" />}
         onPress={removeLatest}
       />
+      {getList()}
+      
     </List.Section>
   );
 };

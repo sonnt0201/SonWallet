@@ -13,17 +13,15 @@ import {
 const styles = StyleSheet.create({
   categories: {
     flexDirection: "column",
-    height: 120,
+    // height: 120,
     marginTop: 20,
   },
-  row: { flex: 1, flexDirection: "row" },
+  row: { flex: 1, flexDirection: "row", marginBottom: 8, },
   buttonContainer: { flex: 1, marginHorizontal: 8 },
 });
 
-export const Categories = ({ title, cost, storeTrade }) => {
+export const Categories = ({ storeTrade, shortened }) => {
   const [dataNum, setDataNum] = useDataNum();
-
-  
 
   return (
     <View style={[styles.categories]}>
@@ -33,12 +31,10 @@ export const Categories = ({ title, cost, storeTrade }) => {
             mode="contained"
             onPress={() => {
               storeTrade({
-             
                 isMoneySubtraction: true,
                 isDebt: false,
               });
 
-              
               console.log("TAP TAP TAP !!!");
             }}
           >
@@ -50,11 +46,9 @@ export const Categories = ({ title, cost, storeTrade }) => {
             mode="outlined"
             onPress={() => {
               storeTrade({
-               
                 isMoneySubtraction: false,
                 isDebt: false,
               });
-              
             }}
           >
             Thêm tiền
@@ -62,40 +56,36 @@ export const Categories = ({ title, cost, storeTrade }) => {
         </View>
       </View>
 
-      <View style={[styles.row]}>
-        <View style={[styles.buttonContainer]}>
-          <Button
-            mode="outlined"
-            onPress={() => {
-              storeTrade({
-               
-                isMoneySubtraction: true,
-                isDebt: true,
-              });
-
-             
-            }}
-          >
-            Cho vay
-          </Button>
+      {!shortened && (
+        <View style={[styles.row]}>
+          <View style={[styles.buttonContainer]}>
+            <Button
+              mode="outlined"
+              onPress={() => {
+                storeTrade({
+                  isMoneySubtraction: true,
+                  isDebt: true,
+                });
+              }}
+            >
+              Cho vay
+            </Button>
+          </View>
+          <View style={[styles.buttonContainer]}>
+            <Button
+              mode="outlined"
+              onPress={() => {
+                storeTrade({
+                  isMoneySubtraction: false,
+                  isDebt: true,
+                });
+              }}
+            >
+              Vay
+            </Button>
+          </View>
         </View>
-        <View style={[styles.buttonContainer]}>
-          <Button
-            mode="outlined"
-            onPress={() => {
-              storeTrade({
-               
-                isMoneySubtraction: false,
-                isDebt: true,
-              });
-
-              
-            }}
-          >
-            Vay
-          </Button>
-        </View>
-      </View>
+      )}
     </View>
   );
 };
