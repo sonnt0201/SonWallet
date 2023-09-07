@@ -13,7 +13,7 @@ import { QuickTags } from "./QuickTags";
 import { TextHelperContainer } from "./TextHelperContainer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDataNum } from "../stores";
-import { traceData } from "../../utils";
+import { addCommasToNum, traceData } from "../../utils";
 import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
@@ -34,14 +34,12 @@ const styles = StyleSheet.create({
 export const Home = () => {
   const [title, setTitle] = useState("");
   const [cost, setCost] = useState("");
-  const [money, setMoney] = useState("0");
+ 
   const inputRef = useRef(null);
-  const [balanceVisible, setBalanceVisible] = useState();
+  
   const [dataNum, setDataNum] = useDataNum();
   const navigation = useNavigation();
-  const toggleBalanceVisible = () => {
-    setBalanceVisible((prev) => !prev);
-  };
+ 
 
   const storeTrade = ({ isMoneySubtraction, isDebt }) =>
     title &&
@@ -50,11 +48,11 @@ export const Home = () => {
       setCost(prev => cost.replace(/,/g, ""));
       let balance = Number(JSON.parse(result));
 
-      balance = isMoneySubtraction ? balance - Number(cost) : balance + Number(cost);
+      balance = isMoneySubtraction ? (balance - Number(cost)) : (balance + Number(cost));
 
       // lưu số tiền mới
       AsyncStorage.setItem("0", JSON.stringify(balance));
-      setMoney(balance);
+     
 
       const currentDate = new Date();
       AsyncStorage.setItem(
@@ -72,6 +70,8 @@ export const Home = () => {
           balance: balance,
         })
       ).then(() => {
+        setCost("")
+        setTitle("")
         setDataNum(prev => prev + 1)
         navigation.navigate("History")
         traceData();
@@ -81,29 +81,10 @@ export const Home = () => {
 
  
 
-  useEffect(() => {
-    AsyncStorage.getItem("0").then(result => {
-      setMoney(result)
-    })
-  }, []);
-  useEffect(() => {
-    AsyncStorage.getItem("0").then(result => {
-      setMoney(result)
-    })
-  }, [dataNum]);
+  
   return (
     <View style={[styles.home]}>
-      <Appbar.Header>
-        <Appbar.Action icon="wallet" />
-        <Appbar.Content
-          title={money.toString()}
-          onPress={toggleBalanceVisible}
-        />
-        <Appbar.Action
-          icon={balanceVisible ? "eye" : "eye-off"}
-          onPress={toggleBalanceVisible}
-        />
-      </Appbar.Header>
+     
       <View style={[styles.guide]}>
         <Text
           onPress={() => {

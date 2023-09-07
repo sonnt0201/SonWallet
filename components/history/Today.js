@@ -81,10 +81,9 @@ export const Today = () => {
   };
 
   return (
-    <List.Accordion
+    <List.Section
       title="Hôm nay"
-      expanded
-      left={(props) => <List.Icon {...props} icon="folder" />}
+      
     >
       {getList()}
       <List.Item
@@ -92,7 +91,7 @@ export const Today = () => {
         right={(props) => <List.Icon {...props} icon="trash-can" />}
         onPress={removeLatest}
       />
-    </List.Accordion>
+    </List.Section>
   );
 };
 

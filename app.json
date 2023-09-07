@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SonWallet",
-    "slug": "SonWallet",
+    "slug": "son-wallet",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4b50ecca-e267-4037-b99e-598f38f53e0d"
+      }
+    },
+    "owner": "sonsonson"
   }
 }

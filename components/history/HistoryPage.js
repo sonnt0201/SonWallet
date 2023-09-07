@@ -12,23 +12,11 @@ const styles = StyleSheet.create({
 })
 
 export const HistoryPage = () => {
-  const [thisMonth, setThisMonth] = useState(1000000)
 
-  
 
   return (
     <View style={[styles.historyPage]}>
-       <Appbar.Header>
-    
-    <Appbar.Action icon="wallet" />
-    <Appbar.Content
-      title={"Tháng này : " + thisMonth}
-      
-    />
-    <Appbar.Action
-      
-    />
-  </Appbar.Header>
+     
     <HistoryList/>
     </View>
    

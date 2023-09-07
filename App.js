@@ -12,6 +12,7 @@ import { MoneyListener } from "./MoneyListener";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { initStorage, traceData } from "./utils";
+import { AppHeader } from "./AppHeader";
 
 
  const globalTheme = {
@@ -25,7 +26,9 @@ import { initStorage, traceData } from "./utils";
   },
 };
 // initStorage()
-// AsyncStorage.setItem("0", JSON.stringify(0))
+AsyncStorage.getItem("0").then(val => {
+  if (!val) AsyncStorage.setItem("0", JSON.stringify(0))
+})
 
 export default function App() {
   // kiểm tra
@@ -38,7 +41,7 @@ export default function App() {
     <PaperProvider theme={globalTheme}>
       <SafeAreaProvider>
         <StoresProvider>
-
+            <AppHeader/>
             <BottomBar />
             <MoneyListener/>
         </StoresProvider>

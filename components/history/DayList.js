@@ -1,13 +1,14 @@
-import { List } from "react-native-paper"
+import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDataNum } from "../stores";
 import { useEffect, useState } from "react";
 import { List, Text } from "react-native-paper";
 import { addCommasToNum, isSameDate, traceData } from "../../utils";
-export const DayList = ({date}) => {
+export const Today = ({date}) => {
   const [dataNum, setDataNum] = useDataNum();
   const [arr, setArr] = useState([]);
   
+
   useEffect(() => {
     AsyncStorage.getAllKeys()
       .then((keys) => AsyncStorage.multiGet(keys))
@@ -20,33 +21,52 @@ export const DayList = ({date}) => {
     else return "+ " + text;
   };
 
+  const description = (trade) => {
+    const isMoneySubtraction = trade["isMoneySubtraction"];
+    const isDebt = trade["isDebt"];
+
+    if (!isDebt) {
+      if (isMoneySubtraction) return "Chi trả";
+      return "Thêm tiền";
+    }
+
+    if (isMoneySubtraction) return "Cho vay";
+    return "Vay";
+  };
+
+ 
+
   const getList = () =>
-    arr.map((pair) => {
+    arr.map((pair, index) => {
       const trade = JSON.parse(pair[1]);
       const time = new Date(trade.time);
-
-      // console.log(isSameDate(time, today()));
+      
+      // console.log(dataNum);
       if (isSameDate(time, date))
         return (
           <List.Item
             key={pair[0]}
             title={trade["title"]}
             right={(props) => <Text {...props}>{rightContent(trade)}</Text>}
-            // description = {}
+            description={description(trade)}
+            onPress={() => {}}
+            
           />
         );
     });
 
-  
+ 
 
   return (
-    <List.Accordion
-      title="Hôm nay"
+    <List.Section
+      title=""
       expanded
       left={(props) => <List.Icon {...props} icon="folder" />}
     >
       {getList()}
-    
-    </List.Accordion>
+      
+    </List.Section>
   );
 };
+
+
