@@ -2,12 +2,31 @@ import { Modal, Text, DefaultTheme, Portal } from "react-native-paper";
 import { View } from "react-native";
 import { InputField } from "../InputField";
 import { Categories } from "../Categories";
-export const InputModal = ({ visible, setVisible,  }) => {
+import { useState } from "react";
+
+// addTag =  ({ title, cost, isSubtraction }) =>
+export const InputModal = ({ visible, setVisible,  setTags, tags }) => {
+  const [title, setTitle] = useState("");
+  const [cost, setCost] = useState("");
+
+  const addTag = ({isMoneySubtraction, isDebt}) => {
+    
+    setTags(prev => [...prev, {id: tags.length, title, cost, isMoneySubtraction}])
+    setTitle("")
+    setCost("")
+    setVisible(false)
+  }
+
   return (
     <View>
-     
-        <InputField labelForTextInput={"Tên tag"} />
-        <Categories shortened ></Categories>
+      <InputField
+        labelForTextInput={"Thêm TAG mới"}
+        title={title}
+        setTitle={setTitle}
+        cost={cost}
+        setCost={setCost}
+      />
+      <Categories shortened handlePress={addTag}/>
     </View>
   );
 };

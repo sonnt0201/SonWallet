@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Keyboard } from "react-native";
 import { Button, Text } from "react-native-paper";
 // import { blue100 } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -20,7 +20,13 @@ const styles = StyleSheet.create({
   buttonContainer: { flex: 1, marginHorizontal: 8 },
 });
 
-export const Categories = ({ storeTrade, shortened }) => {
+/*
+  handlePress: xử lí 4 button để submit input form:
+    với Categories trong Home, handlePress = StoreTrade({isMoneySubtraction, isDebt}) (title và cost đã có sẵn ở Home)
+    với Categories trong QuickTags, HandlePress để add thêm tag vào (title và cost cũng có sẵn)
+*/
+
+export const Categories = ({ handlePress, shortened }) => {
   const [dataNum, setDataNum] = useDataNum();
 
   return (
@@ -30,12 +36,13 @@ export const Categories = ({ storeTrade, shortened }) => {
           <Button
             mode="contained"
             onPress={() => {
-              storeTrade({
+              Keyboard.dismiss()
+              handlePress({
                 isMoneySubtraction: true,
                 isDebt: false,
               });
 
-              console.log("TAP TAP TAP !!!");
+             
             }}
           >
             Chi trả
@@ -45,7 +52,8 @@ export const Categories = ({ storeTrade, shortened }) => {
           <Button
             mode="outlined"
             onPress={() => {
-              storeTrade({
+              Keyboard.dismiss()
+              handlePress({
                 isMoneySubtraction: false,
                 isDebt: false,
               });
@@ -62,7 +70,7 @@ export const Categories = ({ storeTrade, shortened }) => {
             <Button
               mode="outlined"
               onPress={() => {
-                storeTrade({
+                handlePress({
                   isMoneySubtraction: true,
                   isDebt: true,
                 });
@@ -75,7 +83,7 @@ export const Categories = ({ storeTrade, shortened }) => {
             <Button
               mode="outlined"
               onPress={() => {
-                storeTrade({
+                handlePress({
                   isMoneySubtraction: false,
                   isDebt: true,
                 });

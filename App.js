@@ -45,9 +45,6 @@ export default function App() {
             <BottomBar />
             <MoneyListener/>
         </StoresProvider>
-         
-          
-       
       </SafeAreaProvider>
     </PaperProvider>
     </NavigationContainer>

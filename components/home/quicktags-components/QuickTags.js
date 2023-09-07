@@ -14,6 +14,7 @@ import {
 } from "react-native-paper";
 
 import { InputModal } from "./InputModal";
+import { TagChip } from "./TagChip";
 
 styles = StyleSheet.create({
   quickTags: {
@@ -40,54 +41,32 @@ export const QuickTags = () => {
   const [tags, setTags] = useState([]);
   const [inputVisible, setInputVisible] = useState(false);
 
-  const addTag = ({ title, cost, isSubtraction }) =>
-    setTags((prev) => [...prev, { title, cost, isSubtraction }]);
   _removeChip = () => {};
 
   return (
     <Surface styles={[styles.quickTags]} elevation={5}>
-     
       <View style={[styles.title]}>
         <Text icon="tags-mutiple">QuickTags</Text>
       </View>
-      {inputVisible && <InputModal/>}
+      {inputVisible && <InputModal setTags={setTags} tags={tags} visible={inputVisible} setVisible={setInputVisible} />}
       <View key={"add-tag"} style={[styles.chipContainer]}>
         <View style={[styles.chip]}>
           <Chip
-            icon={inputVisible? "pencil-remove":"plus"}
+            icon={inputVisible ? "pencil-remove" : "plus"}
             onPress={() => {
               setInputVisible(!inputVisible);
               console.log(inputVisible);
             }}
           >
-            { inputVisible ? "Hủy thêm" : "Thêm tag"}
+            {inputVisible ? "Hủy thêm" : "Thêm tag"}
           </Chip>
         </View>
 
-        <View style={[styles.chip]}>
-          <Chip
-            icon="tag"
-            onPress={() => console.log("Pressed")}
-            onClose={() => {
-              _removeChip();
-            }}
-            // style={[styles.chip]}
-          >
-            Example Chip
-          </Chip>
-        </View>
-        <View style={[styles.chip]}>
-          <Chip
-            icon="tag"
-            onPress={() => console.log("Pressed")}
-            onClose={() => {
-              _removeChip();
-            }}
-            // style={[styles.chip]}
-          >
-            Example Chip
-          </Chip>
-        </View>
+        {tags.map((tag) => (
+         <TagChip title={tag.title} cost={tag.cost} isSubtraction={tag.isMoneySubtraction}/>
+        ))}
+
+        
       </View>
     </Surface>
   );

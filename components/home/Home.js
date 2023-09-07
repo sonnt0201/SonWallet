@@ -40,7 +40,7 @@ export const Home = () => {
   const [dataNum, setDataNum] = useDataNum();
   const navigation = useNavigation();
  
-
+  // Được truyền xuống Categories để các button ở categories xử lý với từng gtri isMoneySubtraction, isDebt
   const storeTrade = ({ isMoneySubtraction, isDebt }) =>
     title &&
     cost &&
@@ -106,7 +106,7 @@ export const Home = () => {
       />
 
       <TextHelperContainer title={title} cost={cost} />
-      <Categories title={title} cost={cost} storeTrade = {storeTrade} />
+      <Categories title={title} cost={cost} handlePress = {storeTrade} />
       <QuickTags />
     </ScrollView>
   );
