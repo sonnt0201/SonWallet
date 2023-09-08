@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import {
   Avatar,
@@ -15,6 +15,8 @@ import {
 
 import { InputModal } from "./InputModal";
 import { TagChip } from "./TagChip";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { traceData } from "../../../utils";
 
 styles = StyleSheet.create({
   quickTags: {
@@ -40,6 +42,34 @@ styles = StyleSheet.create({
 export const QuickTags = () => {
   const [tags, setTags] = useState([]);
   const [inputVisible, setInputVisible] = useState(false);
+
+  // lấy tags từ storage khi mở ứng dụng
+  const getTagsFromStorage = () => AsyncStorage.getItem("0").then(val => {
+    const info = JSON.parse(val);
+    setTags(info["tags"])
+  }).then(() => {
+    traceData()
+  })
+
+  // được gọi mỗi khi tags thay đổi => trong useEffect
+  const saveTagsToStorage = () => AsyncStorage.getItem("0").then(val => {
+    const info = JSON.parse(val);
+    AsyncStorage.setItem("0", JSON.stringify({
+      ...info,
+      tags
+    })).then(() => {
+      traceData()
+    })
+  })
+
+
+  useEffect(() => {
+    getTagsFromStorage();
+  },[])
+
+  useEffect(() => {
+    saveTagsToStorage()
+  },[tags])
 
   _removeChip = () => {};
 

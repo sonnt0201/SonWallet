@@ -47,9 +47,7 @@ export const TagChip = ({ title, cost, isSubtraction }) => {
           balance: balance,
         })
       ).then(() => {
-        // setCost("")
-        // setTitle("")
-        // setDataNum
+       
         setDataNum(prev => prev + 1)
         navigation.navigate("History")
         traceData();

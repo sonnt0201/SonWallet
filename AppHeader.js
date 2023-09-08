@@ -13,7 +13,8 @@ export const AppHeader = () => {
 
   const getMoneyFromStorage = () => {
     AsyncStorage.getItem("0").then((val) => {
-      if (!val)
+      const info = JSON.parse(val)
+      if (!val || !info["money"])
         AsyncStorage.setItem(
           "0",
           JSON.stringify({
@@ -24,12 +25,13 @@ export const AppHeader = () => {
           setDataNum(1);
         });
       else {
-        const info = JSON.parse(val);
+      
         setMoney(info["money"]);
       }
     });
   };
 
+  
   useEffect(() => {
     getMoneyFromStorage();
   }, [dataNum]);
