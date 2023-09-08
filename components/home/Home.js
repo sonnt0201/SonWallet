@@ -41,6 +41,7 @@ export const Home = () => {
   const navigation = useNavigation();
  
   // Được truyền xuống Categories để các button ở categories xử lý với từng gtri isMoneySubtraction, isDebt
+  // có 2 function storeTrade, khi sửa 1 func => cần sửa cả 2 func ở : Home, TagChip
   const storeTrade = ({ isMoneySubtraction, isDebt }) =>
     title &&
     cost &&

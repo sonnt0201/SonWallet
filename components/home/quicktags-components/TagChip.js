@@ -10,6 +10,7 @@ export const TagChip = ({ title, cost, isSubtraction }) => {
     const navigation = useNavigation();
 
     // thêm giao dịch được đặt trong tag chip, tương tự thêm giao dịch ở Home
+    // có 2 function storeTrade, khi sửa 1 func => cần sửa cả 2 func ở : Home, TagChip
     const storeTrade = () =>
     title &&
     cost &&
