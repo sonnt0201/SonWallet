@@ -26,9 +26,7 @@ import { AppHeader } from "./AppHeader";
   },
 };
 // initStorage()
-AsyncStorage.getItem("0").then(val => {
-  if (!val) AsyncStorage.setItem("0", JSON.stringify(0))
-})
+
 
 export default function App() {
   // kiểm tra

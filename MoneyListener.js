@@ -16,15 +16,15 @@ export const MoneyListener = () => {
   //     });
   // }, [dataNum]);
 
-  useEffect(() => {
-    AsyncStorage.getAllKeys().then((keys) => {
-      AsyncStorage.multiGet(keys).then((pairs) => {
-        console.log("pair: " + pairs);
-        setDataNum(pairs.length);
-        console.log("data num " + dataNum);
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   AsyncStorage.getAllKeys().then((keys) => {
+  //     AsyncStorage.multiGet(keys).then((pairs) => {
+  //       console.log("pair: " + pairs);
+  //       setDataNum(pairs.length);
+  //       console.log("data num " + dataNum);
+  //     });
+  //   });
+  // }, []);
 
   return null;
 };

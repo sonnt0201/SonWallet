@@ -9,6 +9,7 @@ export const InputModal = ({ visible, setVisible,  setTags, tags }) => {
   const [title, setTitle] = useState("");
   const [cost, setCost] = useState("");
 
+  // Thêm 1 tag ( chưa phải thêm giao dịch)
   const addTag = ({isMoneySubtraction, isDebt}) => {
     
     setTags(prev => [...prev, {id: tags.length, title, cost, isMoneySubtraction}])

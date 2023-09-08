@@ -45,15 +45,26 @@ export const Home = () => {
     title &&
     cost &&
     AsyncStorage.getItem("0").then((result) => {
-      setCost(prev => cost.replace(/,/g, ""));
-      let balance = Number(JSON.parse(result));
 
+      
+
+
+      setCost(prev => prev.replace(/,/g, ""));
+      
+      // lây money trong info
+      const info = JSON.parse(result);
+      let balance = info["money"];
       balance = isMoneySubtraction ? (balance - Number(cost)) : (balance + Number(cost));
-
+      if (balance < 0) return // trừ âm thì không lưu được giao dịch
+      
       // lưu số tiền mới
-      AsyncStorage.setItem("0", JSON.stringify(balance));
+      AsyncStorage.setItem("0", JSON.stringify({
+        ...info,
+        money: balance
+      }));
      
 
+      // lưu trade mới
       const currentDate = new Date();
       AsyncStorage.setItem(
         JSON.stringify(dataNum),
@@ -72,6 +83,7 @@ export const Home = () => {
       ).then(() => {
         setCost("")
         setTitle("")
+        // setDataNum
         setDataNum(prev => prev + 1)
         navigation.navigate("History")
         traceData();

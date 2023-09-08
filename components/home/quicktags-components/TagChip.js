@@ -8,18 +8,28 @@ import { traceData } from "../../../utils";
 export const TagChip = ({ title, cost, isSubtraction }) => {
     const [dataNum, setDataNum] = useDataNum()
     const navigation = useNavigation();
-  const storeTrade = () =>
+
+    // thêm giao dịch được đặt trong tag chip, tương tự thêm giao dịch ở Home
+    const storeTrade = () =>
     title &&
     cost &&
     AsyncStorage.getItem("0").then((result) => {
-      let balance = Number(JSON.parse(result));
 
-      balance = isSubtraction ? balance - Number(cost) : balance + Number(cost);
-
+      // setCost(prev => prev.replace(/,/g, ""));
+      
+      // lây money trong info
+      const info = JSON.parse(result);
+      let balance = info["money"];
+      balance = isSubtraction ? (balance - Number(cost)) : (balance + Number(cost));
+      if (balance < 0) return // trừ âm thì không lưu được giao dịch
+      
       // lưu số tiền mới
-      AsyncStorage.setItem("0", JSON.stringify(balance));
-
-    //   lưu giao dịch mới
+      AsyncStorage.setItem("0", JSON.stringify({
+        ...info,
+        money: balance
+      }));
+     
+      // lưu trade mới
       const currentDate = new Date();
       AsyncStorage.setItem(
         JSON.stringify(dataNum),
@@ -36,11 +46,13 @@ export const TagChip = ({ title, cost, isSubtraction }) => {
           balance: balance,
         })
       ).then(() => {
-
-        // thay đổi dataNum
-        setDataNum((prev) => prev + 1);
-        navigation.navigate("History");
+        // setCost("")
+        // setTitle("")
+        // setDataNum
+        setDataNum(prev => prev + 1)
+        navigation.navigate("History")
         traceData();
+        
       });
     });
 
