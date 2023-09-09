@@ -5,7 +5,7 @@ import { useDataNum } from "../../stores";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { traceData } from "../../../utils";
-export const TagChip = ({ id, title, cost, isSubtraction }) => {
+export const TagChip = ({ id, title, cost, isSubtraction, removeChip }) => {
   const [dataNum, setDataNum] = useDataNum();
   const navigation = useNavigation();
 
@@ -57,6 +57,7 @@ export const TagChip = ({ id, title, cost, isSubtraction }) => {
       });
     });
 
+   
   return (
     <View style={[styles.chip]}>
       <Chip
@@ -66,9 +67,9 @@ export const TagChip = ({ id, title, cost, isSubtraction }) => {
           storeTrade();
         }}
         onClose={() => {
-          _removeChip();
+          removeChip(id);
         }}
-        // style={[styles.chip]}
+        onLongPress={() => removeChip(id)}
       >
         {title + (isSubtraction ? "   -" : "  +") + addCommasToNum(cost) + "Đ"}
       </Chip>

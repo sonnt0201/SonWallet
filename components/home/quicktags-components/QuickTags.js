@@ -44,41 +44,66 @@ export const QuickTags = () => {
   const [inputVisible, setInputVisible] = useState(false);
 
   // lấy tags từ storage khi mở ứng dụng
-  const getTagsFromStorage = () => AsyncStorage.getItem("0").then(val => {
-    const info = JSON.parse(val);
-    setTags(info["tags"])
-  }).then(() => {
-    traceData()
-  })
+  const getTagsFromStorage = () =>
+    AsyncStorage.getItem("0")
+      .then((val) => {
+        const info = JSON.parse(val);
+        setTags(info["tags"]);
+      })
+      .then(() => {
+        traceData();
+      });
 
   // được gọi mỗi khi tags thay đổi => trong useEffect
-  const saveTagsToStorage = () => AsyncStorage.getItem("0").then(val => {
-    const info = JSON.parse(val);
-    AsyncStorage.setItem("0", JSON.stringify({
-      ...info,
-      tags
-    })).then(() => {
-      traceData()
-    })
-  })
-
+  const saveTagsToStorage = () =>
+    AsyncStorage.getItem("0").then((val) => {
+      const info = JSON.parse(val);
+      AsyncStorage.setItem(
+        "0",
+        JSON.stringify({
+          ...info,
+          tags,
+        })
+      ).then(() => {
+        traceData();
+      });
+    });
 
   useEffect(() => {
     getTagsFromStorage();
-  },[])
+  }, []);
 
   useEffect(() => {
-    saveTagsToStorage()
-  },[tags])
+    saveTagsToStorage();
+  }, [tags]);
 
-  _removeChip = () => {};
+  const removeChip = (id) => {
+    // Create a copy of the current tags array with the specified tag removed
+    const updatedTags = tags.filter((tag) => tag.id !== id);
+
+    // Reset the id values for the remaining tags to match their index in the array
+    const updatedTagsWithNewIds = updatedTags.map((tag, index) => ({
+      ...tag,
+      id: index,
+    }));
+
+    // Update the tags state with the new array
+    setTags(updatedTagsWithNewIds);
+  };
 
   return (
     <Surface styles={[styles.quickTags]} elevation={5}>
       <View style={[styles.title]}>
         <Text icon="tags-mutiple">QuickTags</Text>
       </View>
-      {inputVisible && <InputModal setTags={setTags} tags={tags} visible={inputVisible} setVisible={setInputVisible} />}
+      {inputVisible && (
+        <InputModal
+          setTags={setTags}
+          tags={tags}
+          visible={inputVisible}
+          setVisible={setInputVisible}
+        />
+      )}
       <View key={"add-tag"} style={[styles.chipContainer]}>
         <View style={[styles.chip]}>
           <Chip
@@ -93,10 +118,14 @@ export const QuickTags = () => {
         </View>
 
         {tags.map((tag) => (
-         <TagChip id={tag.id} title={tag.title} cost={tag.cost} isSubtraction={tag.isMoneySubtraction}/>
+          <TagChip
+            id={tag.id}
+            title={tag.title}
+            cost={tag.cost}
+            isSubtraction={tag.isMoneySubtraction}
+            removeChip={removeChip}
+          />
         ))}
-
-        
       </View>
     </Surface>
   );
