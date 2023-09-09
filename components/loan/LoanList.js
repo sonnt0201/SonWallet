@@ -17,7 +17,7 @@ export const LoanList = () => {
 
         // Filter and sort the trades
         const debtTradesSorted = parsedData
-          .filter((trade) => trade.isDebt === true).reverse()
+          .filter((trade) => trade.isDebt === true).sort((a, b) => b.id - a.id)
           
 
         setDebtTrades(debtTradesSorted);

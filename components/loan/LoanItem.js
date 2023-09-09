@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { IconButton, List, Surface, Text } from "react-native-paper";
+import { DefaultTheme, IconButton, List, Surface, Text } from "react-native-paper";
 import { addCommasToNum, formatDate } from "../../utils";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useDataNum } from "../stores";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { traceData } from "../../utils";
 export const LoanItem = ({ item }) => {
   const [paidConfirm, setPaidConfirm] = useState(false); // boolean
-
+  const isNotPaid = () => (item.debtID === item.id)
   // if (!paidConfirm)
   return (<View>
-    <Surface elevation={5}>
+    <Surface elevation={isNotPaid() ? 5: 0}>
       <List.Item
         onPress={() => {
           if (item.id === item.debtID) setPaidConfirm((prev) => !prev);
@@ -19,13 +19,13 @@ export const LoanItem = ({ item }) => {
         title={item.title}
         description={formatDate(new Date(item.time))}
         right={(props) => (
-          <View>
+          <View >
             <Text>
               {(item.isMoneySubtraction ? "-" : "+") +
                 addCommasToNum(item.cost) +
                 " Đ"}
             </Text>
-            <Text>{item.debtID === item.id ? "Chưa trả" : "Đã trả"}</Text>
+            <Text >{item.debtID === item.id ? "Chưa trả" : "Đã trả"}</Text>
           </View>
         )}
       />
@@ -111,7 +111,7 @@ const PaidConfirm = ({ item, setPaidConfirm }) => {
         title={"Xác nhận trả nợ"}
         description={item.title}
         right={(props) => (
-          <IconButton icon={"checkbox-marked-circle"} onPress={storePaid} />
+          <IconButton icon={"check-bold"} onPress={storePaid} iconColor="#FAD6A5" />
         )}
         left={() => (
           <IconButton
@@ -119,9 +119,20 @@ const PaidConfirm = ({ item, setPaidConfirm }) => {
             onPress={() => {
               setPaidConfirm((prev) => !prev);
             }}
+            iconColor="#FF597B"
           />
         )}
       />
     </Surface>
   );
 };
+
+const styles = StyleSheet.create({
+  tick : {
+    color: "#FAD6A5"
+  },
+
+  cancel: {
+    color: "red"
+  }
+})
