@@ -3,33 +3,35 @@ import { Chip } from "react-native-paper";
 import { addCommasToNum } from "../../../utils";
 import { useDataNum } from "../../stores";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import { traceData } from "../../../utils";
-export const TagChip = ({ title, cost, isSubtraction }) => {
-    const [dataNum, setDataNum] = useDataNum()
-    const navigation = useNavigation();
+export const TagChip = ({ id, title, cost, isSubtraction }) => {
+  const [dataNum, setDataNum] = useDataNum();
+  const navigation = useNavigation();
 
-    // thêm giao dịch được đặt trong tag chip, tương tự thêm giao dịch ở Home
-    // có 2 function storeTrade, khi sửa 1 func => cần sửa cả 2 func ở : Home, TagChip
-    const storeTrade = () =>
+  // thêm giao dịch được đặt trong tag chip, tương tự thêm giao dịch ở Home
+  // có 2 function storeTrade, khi sửa 1 func => cần sửa cả 2 func ở : Home, TagChip
+  const storeTrade = () =>
     title &&
     cost &&
     AsyncStorage.getItem("0").then((result) => {
-
       // setCost(prev => prev.replace(/,/g, ""));
-      
+
       // lây money trong info
       const info = JSON.parse(result);
       let balance = info["money"];
-      balance = isSubtraction ? (balance - Number(cost)) : (balance + Number(cost));
-      if (balance < 0) return // trừ âm thì không lưu được giao dịch
-      
+      balance = isSubtraction ? balance - Number(cost) : balance + Number(cost);
+      if (balance < 0) return; // trừ âm thì không lưu được giao dịch
+
       // lưu số tiền mới
-      AsyncStorage.setItem("0", JSON.stringify({
-        ...info,
-        money: balance
-      }));
-     
+      AsyncStorage.setItem(
+        "0",
+        JSON.stringify({
+          ...info,
+          money: balance,
+        })
+      );
+
       // lưu trade mới
       const currentDate = new Date();
       AsyncStorage.setItem(
@@ -47,20 +49,19 @@ export const TagChip = ({ title, cost, isSubtraction }) => {
           balance: balance,
         })
       ).then(() => {
-       
-        setDataNum(prev => prev + 1)
-        navigation.navigate("History")
+        setDataNum((prev) => prev + 1);
+        navigation.navigate("History");
         traceData();
-        
       });
     });
 
   return (
     <View style={[styles.chip]}>
       <Chip
+        key={TagChip.id}
         icon="tag"
         onPress={() => {
-            storeTrade()
+          storeTrade();
         }}
         onClose={() => {
           _removeChip();

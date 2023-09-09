@@ -93,7 +93,7 @@ export const QuickTags = () => {
         </View>
 
         {tags.map((tag) => (
-         <TagChip title={tag.title} cost={tag.cost} isSubtraction={tag.isMoneySubtraction}/>
+         <TagChip id={tag.id} title={tag.title} cost={tag.cost} isSubtraction={tag.isMoneySubtraction}/>
         ))}
 
         
