@@ -48,13 +48,12 @@ export const Today = () => {
   };
 
   const getList = () =>
-    arr
+    arr.sort((a, b) => (b[0] - a[0]))
       .map((pair, index, arr) => {
         const trade = JSON.parse(pair[1]);
         if (!trade.time) return null;
         const time = new Date(trade.time);
 
-        // console.log(dataNum);
         if (isSameDate(time, today()))
           return (
             <List.Item
@@ -63,11 +62,11 @@ export const Today = () => {
               right={(props) => <Text {...props}>{rightContent(trade)}</Text>}
               description={description(trade)}
               onPress={() => {}}
-              style={styleForLatestItem(index)}
+              style={index === 0 && [styles.latest] }
             />
           );
       })
-      .reverse();
+      ;
 
   const removeLatest = () => {
     if (dataNum <= 2) return;

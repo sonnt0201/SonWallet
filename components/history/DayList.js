@@ -40,7 +40,8 @@ export const DayList = ({date}) => {
  
 
   const getList = () =>
-    arr.map((pair, index) => {
+  arr.sort((a, b) => (b[0] - a[0]))
+    .map((pair, index) => {
       const trade = JSON.parse(pair[1]);
       const time = new Date(trade.time);
       

@@ -4,7 +4,7 @@ import { View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, BottomNavigation } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import {Home, HistoryPage, LoanPage} from "./components"
+import { Home, HistoryPage, LoanPage } from "./components";
 import { CommonActions } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
@@ -13,7 +13,6 @@ export function BottomBar() {
   return (
     // <View style={[styles.container]}>
     <Tab.Navigator
-
       screenOptions={{
         headerShown: false,
       }}
@@ -70,7 +69,7 @@ export function BottomBar() {
         }}
       />
 
-<Tab.Screen
+      <Tab.Screen
         name="History"
         component={HistoryPage}
         options={{
@@ -92,7 +91,7 @@ export function BottomBar() {
         }}
       />
 
-<Tab.Screen
+      {/* <Tab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
@@ -101,9 +100,7 @@ export function BottomBar() {
             return <Icon name="cogs" size={size} color={color} />;
           },
         }}
-      />
-
-      
+      /> */}
     </Tab.Navigator>
     // </View>
   );
