@@ -48,9 +48,7 @@ const PaidConfirm = ({ item, setPaidConfirm }) => {
       ...item,
       title: item.title + " (Đã trả) ",
       debtID: dataNum,
-    }))
-
-    AsyncStorage.getItem("0").then((result) => {
+    })) .then(() => AsyncStorage.getItem("0").then((result) => {
       if (item.id !== item.debtID) return
       const cost = item.cost;
       // lây money trong info
@@ -98,7 +96,9 @@ const PaidConfirm = ({ item, setPaidConfirm }) => {
 
         traceData();
       });
-    });
+    }))
+
+    
   }
     
 
