@@ -49,13 +49,13 @@ export const Home = () => {
 
       
 
-
+      const costInNum = cost.replace(/,/g, "")
       setCost(prev => prev.replace(/,/g, ""));
       
       // lây money trong info
       const info = JSON.parse(result);
       let balance = info["money"];
-      balance = isMoneySubtraction ? (balance - Number(cost)) : (balance + Number(cost));
+      balance = isMoneySubtraction ? (balance - Number(costInNum)) : (balance + Number(costInNum));
       if (balance < 0) return // trừ âm thì không lưu được giao dịch
       
       // lưu số tiền mới
@@ -72,7 +72,7 @@ export const Home = () => {
         JSON.stringify({
           id: dataNum,
           title,
-          cost,
+          cost: Number(costInNum),
           isMoneySubtraction,
           isDebt,
           time: new Date(

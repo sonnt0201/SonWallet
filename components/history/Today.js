@@ -70,6 +70,8 @@ export const Today = () => {
 
   const removeLatest = () => {
     if (dataNum <= 2) return;
+    // check removable
+    // AsyncStorage
     else
       AsyncStorage.removeItem(JSON.stringify(dataNum - 1)).then(() => {
         // lấy giao dịch ngay trước đó

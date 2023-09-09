@@ -6,3 +6,6 @@ export {getUniqueTimes} from "./getUniqueTimes"
 export {getTimeToday} from "./getTimeToday"
 import { formatDate } from "./formatDate"
 export {formatDate} 
+
+import { formatInputNum } from "./formatInputNum"
+export { formatInputNum}

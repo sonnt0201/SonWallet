@@ -5,7 +5,7 @@ import { useDataNum } from "../../stores";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { traceData } from "../../../utils";
-export const TagChip = ({ id, title, cost, isSubtraction, removeChip }) => {
+export const TagChip = ({ id, title, cost, isSubtraction, removeChip, }) => {
   const [dataNum, setDataNum] = useDataNum();
   const navigation = useNavigation();
 
@@ -16,11 +16,11 @@ export const TagChip = ({ id, title, cost, isSubtraction, removeChip }) => {
     cost &&
     AsyncStorage.getItem("0").then((result) => {
       // setCost(prev => prev.replace(/,/g, ""));
-
+      const costNum = cost.replace(/,/g, '');
       // lây money trong info
       const info = JSON.parse(result);
       let balance = info["money"];
-      balance = isSubtraction ? balance - Number(cost) : balance + Number(cost);
+      balance = isSubtraction ? balance - Number(costNum) : balance + Number(costNum);
       if (balance < 0) return; // trừ âm thì không lưu được giao dịch
 
       // lưu số tiền mới
@@ -39,7 +39,7 @@ export const TagChip = ({ id, title, cost, isSubtraction, removeChip }) => {
         JSON.stringify({
           id: dataNum,
           title,
-          cost,
+          cost: costNum,
           isMoneySubtraction: isSubtraction,
           isDebt: false,
           time: new Date(

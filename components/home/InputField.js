@@ -48,7 +48,19 @@ export const InputField = ({
   labelForTextInput
 }) => {
 
- 
+  const formatCostValue = (value) => {
+    // Remove existing commas and non-numeric characters
+    const cleanedValue = value.replace(/[^\d]/g, "");
+    // Add commas every three digits from the right
+    const formattedValue = cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return formattedValue;
+  };
+
+  // Function to handle cost input value changes
+  const handleCostChange = (value) => {
+    // Format the input value and update the state
+    setCost(formatCostValue(value));
+  };
 
   return (
     <View style={[styles.container]}>
@@ -81,16 +93,13 @@ export const InputField = ({
           placeholder="Số tiền"
           keyboardType="numeric"
           value={cost}
-          onChangeText={num => {
-            setCost(num)
-            console.log(num)
-          }}
+          onChangeText={handleCostChange}
         />
       </View>
       <View key={"kdong-tag-container"}
        style={[styles.kdongtag]} 
        onTouchEnd={() => {
-        setCost(prev => (prev + "000"))
+        setCost(prev => (prev + ",000"))
        }}
        >
         <Text>?000</Text>
