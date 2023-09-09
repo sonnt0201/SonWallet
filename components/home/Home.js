@@ -41,7 +41,7 @@ export const Home = () => {
   const navigation = useNavigation();
  
   // Được truyền xuống Categories để các button ở categories xử lý với từng gtri isMoneySubtraction, isDebt
-  // có 2 function storeTrade, khi sửa 1 func => cần sửa cả 2 func ở : Home, TagChip
+  // có 3 function storeTrade, khi sửa 1 func => cần sửa cả 3 func ở : Home, TagChip, LoanItem
   const storeTrade = ({ isMoneySubtraction, isDebt }) =>
     title &&
     cost &&
@@ -70,6 +70,7 @@ export const Home = () => {
       AsyncStorage.setItem(
         JSON.stringify(dataNum),
         JSON.stringify({
+          id: dataNum,
           title,
           cost,
           isMoneySubtraction,
@@ -80,6 +81,8 @@ export const Home = () => {
             currentDate.getDate()
           ),
           balance: balance,
+          debtID: dataNum, // nếu isDebt = true, debtID dùng để xác định nợ đã trả hay chưa
+          // debtID === id => chưa trả, debtID !== id => đã trả và debtID liên kết tới giao dịch trả
         })
       ).then(() => {
         setCost("")

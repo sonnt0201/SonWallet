@@ -29,6 +29,7 @@ export const Today = () => {
   };
 
   const description = (trade) => {
+    if (trade.id === 1) return "Tạo 1 giao dịch mới để bắt đầu"
     const isMoneySubtraction = trade["isMoneySubtraction"];
     const isDebt = trade["isDebt"];
 

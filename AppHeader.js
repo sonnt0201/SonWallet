@@ -1,7 +1,7 @@
 import { Appbar } from "react-native-paper";
 import { useState, useEffect } from "react";
 import { useDataNum } from "./components/stores";
-import { addCommasToNum, traceData } from "./utils";
+import { addCommasToNum, getTimeToday, traceData } from "./utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export const AppHeader = () => {
   const [money, setMoney] = useState("0");
@@ -13,25 +13,36 @@ export const AppHeader = () => {
 
   const getMoneyFromStorage = () => {
     AsyncStorage.getItem("0").then((val) => {
-      const info = JSON.parse(val)
+      const info = JSON.parse(val);
       if (!val || !info["money"])
-        AsyncStorage.setItem(
-          "0",
-          JSON.stringify({
-            money: 0,
-            tags: [],
-          })
-        ).then(() => {
-          setDataNum(1);
+        AsyncStorage.multiSet([
+          [
+            "0",
+            JSON.stringify({
+              money: 0,
+              tags: [],
+            }),
+          ],
+          [
+            "1",
+            JSON.stringify({
+              id: 1,
+              title: "Chào mừng! ",
+              cost: 0,
+              isMoneySubtraction: false,
+              isDebt: false,
+              time: getTimeToday()
+            })
+          ]
+        ]).then(() => {
+          setDataNum(2);
         });
       else {
-      
         setMoney(info["money"]);
       }
     });
   };
 
-  
   useEffect(() => {
     getMoneyFromStorage();
   }, [dataNum]);

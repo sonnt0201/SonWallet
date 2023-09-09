@@ -10,7 +10,7 @@ export const TagChip = ({ id, title, cost, isSubtraction }) => {
   const navigation = useNavigation();
 
   // thêm giao dịch được đặt trong tag chip, tương tự thêm giao dịch ở Home
-  // có 2 function storeTrade, khi sửa 1 func => cần sửa cả 2 func ở : Home, TagChip
+  // // có 3 function storeTrade, khi sửa 1 func => cần sửa cả 3 func ở : Home, TagChip, LoanItem
   const storeTrade = () =>
     title &&
     cost &&
@@ -37,6 +37,7 @@ export const TagChip = ({ id, title, cost, isSubtraction }) => {
       AsyncStorage.setItem(
         JSON.stringify(dataNum),
         JSON.stringify({
+          id: dataNum,
           title,
           cost,
           isMoneySubtraction: isSubtraction,
@@ -47,6 +48,7 @@ export const TagChip = ({ id, title, cost, isSubtraction }) => {
             currentDate.getDate()
           ),
           balance: balance,
+          debtID: dataNum,
         })
       ).then(() => {
         setDataNum((prev) => prev + 1);

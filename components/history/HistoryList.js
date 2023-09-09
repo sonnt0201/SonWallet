@@ -6,10 +6,11 @@ import { List, Text } from "react-native-paper";
 import { DayList } from "./DayList";
 import { formatDate } from "../../utils";
 import { Today } from "./Today";
+import { useDataNum } from "../stores";
 export const HistoryList = () => {
 
   const [uniqueTimesArray, setUniqueTimesArray] = useState([]);
-
+  const [dataNum, setDataNum] = useDataNum()
   const today = () => {
     const current = new Date();
     return new Date(current.getFullYear(), current.getMonth(), current.getDate())

@@ -12,11 +12,7 @@ const styles = StyleSheet.create({
 export const LoanPage = () => {
   return (
     <View style={[styles.loanPage]}>
-      <Appbar.Header>
-        <Appbar.Action icon="wallet" />
-        <Appbar.Content title={" Vay nợ "} />
-        <Appbar.Action />
-      </Appbar.Header>
+     
       <LoanList />
     </View>
   );

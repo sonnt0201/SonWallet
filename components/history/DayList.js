@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDataNum } from "../stores";
 import { useEffect, useState } from "react";
-import { List, Text } from "react-native-paper";
+import { List, Surface, Text } from "react-native-paper";
 import { addCommasToNum, isSameDate,  } from "../../utils";
 import { formatDate } from "../../utils";
 export const DayList = ({date}) => {
@@ -23,6 +23,8 @@ export const DayList = ({date}) => {
   };
 
   const description = (trade) => {
+
+    if (trade.id === 1) return "Tạo 1 giao dịch mới để bắt đầu"
     const isMoneySubtraction = trade["isMoneySubtraction"];
     const isDebt = trade["isDebt"];
 
@@ -45,6 +47,7 @@ export const DayList = ({date}) => {
       // console.log(dataNum);
       if (isSameDate(time, date))
         return (
+     
           <List.Item
             key={pair[0]}
             title={trade["title"]}
@@ -53,6 +56,8 @@ export const DayList = ({date}) => {
             onPress={() => {}}
             
           />
+      
+        
         );
     }).reverse();
 

@@ -1,40 +1,51 @@
-
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import { DefaultTheme, List } from 'react-native-paper';
-
-
+import { useEffect, useState } from "react";
+import { StyleSheet, FlatList, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LoanItem } from "./LoanItem";
+import { List, Text } from "react-native-paper";
+import { useDataNum } from "../stores";
 
 export const LoanList = () => {
-  const [expanded, setExpanded] = React.useState(true);
+  const [debtTrades, setDebtTrades] = useState([]);
+  const [dataNum, ] = useDataNum()
+  useEffect(() => {
+    // Retrieve data from AsyncStorage
+    AsyncStorage.getAllKeys()
+      .then((keys) => AsyncStorage.multiGet(keys))
+      .then((data) => {
+        const parsedData = data.map(([key, value]) => JSON.parse(value));
 
-  const handlePress = () => setExpanded(!expanded);
+        // Filter and sort the trades
+        const debtTradesSorted = parsedData
+          .filter((trade) => trade.isDebt === true).reverse()
+          
+
+        setDebtTrades(debtTradesSorted);
+      })
+      .catch((error) => {
+        console.error("Error retrieving data from AsyncStorage:", error);
+      });
+  }, [dataNum]);
 
   return (
-    <List.Section  title="Lịch sử giao dịch" style={[styles.historyPage]} theme={DefaultTheme}>
-      
-     
-
-      <List.Accordion
-        title="Uncontrolled Accordion"
-        left={props => <List.Icon {...props} icon="account-cash" />}>
-        <List.Item title="First item" />
-        <List.Item title="Second item" />
-      </List.Accordion>
-
-      <List.Accordion
-        title="Controlled Accordion"
-        left={props => <List.Icon {...props} icon="folder" />}
-        expanded={expanded}
-        onPress={handlePress}>
-        <List.Item title="First item" onPress={() => {
-
-        }} />
-        <List.Item title="Second item" onPress={() => {
-            
-        }}/>
-      </List.Accordion>
-    </List.Section>
+    <View>
+      {/* <List.Section title={"(nhấn vào các khoản nợ để xác nhận trả)"}> */}
+        <FlatList
+          data={debtTrades}
+          keyExtractor={(item, index) => `${item.title}-${index}`}
+          renderItem={({ item }) => <LoanItem item={item} />}
+          ListHeaderComponent={() => <Text style = {[styles.header]}>Nhấn vào các khoản nợ để xác nhận trả</Text>}
+        />
+      {/* </List.Section> */}
+    </View>
   );
 };
 
+
+const styles = StyleSheet.create({
+  header: {
+     marginHorizontal: 10,
+  color: "#FAD6A5",
+  }
+ 
+})
