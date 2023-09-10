@@ -78,7 +78,7 @@ export const InputField = ({
           multiline
           onChangeText={text => {
             setTitle(text)
-            console.log(text)
+            // console.log(text)
           }}
         />
       </View>

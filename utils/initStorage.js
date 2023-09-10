@@ -5,5 +5,5 @@ import { traceData } from "./traceData";
 export const initStorage = async() => {
     await AsyncStorage.multiRemove(await AsyncStorage.getAllKeys());
     
-    traceData()
+    // traceData()
 }

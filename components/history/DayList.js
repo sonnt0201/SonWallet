@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { List, Surface, Text } from "react-native-paper";
 import { addCommasToNum, isSameDate,  } from "../../utils";
 import { formatDate } from "../../utils";
+import { COLOR_PRIMARY } from "../../configs";
 export const DayList = ({date}) => {
   const [dataNum, ] = useDataNum();
   const [arr, setArr] = useState([]);
@@ -67,6 +68,7 @@ export const DayList = ({date}) => {
   return (
     <List.Section
       title={formatDate(date)}
+      titleStyle = {[styles.sectionTitle]}
       expanded
       left={(props) => <List.Icon {...props} icon="folder" />}
     >
@@ -76,4 +78,9 @@ export const DayList = ({date}) => {
   );
 };
 
+const styles = StyleSheet.create({
+  sectionTitle: {
+    color: COLOR_PRIMARY
+  },
+})
 

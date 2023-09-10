@@ -32,7 +32,7 @@ import { COLOR_PRIMARY } from "./configs";
 export default function App() {
   // kiểm tra
   useEffect(() => {
-    traceData()
+    // traceData()
   },[])
 
   return (

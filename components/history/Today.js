@@ -3,7 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDataNum } from "../stores";
 import { useEffect, useState } from "react";
 import { List, Text } from "react-native-paper";
-import { addCommasToNum, isSameDate, traceData } from "../../utils";
+import { addCommasToNum, isSameDate, } from "../../utils";
+import { COLOR_PRIMARY } from "../../configs";
 export const Today = () => {
   const [dataNum, setDataNum] = useDataNum();
   const [arr, setArr] = useState([]);
@@ -29,7 +30,7 @@ export const Today = () => {
   };
 
   const description = (trade) => {
-    if (trade.id === 1) return "Tạo 1 giao dịch mới để bắt đầu"
+    if (trade.id === 1) return "Tạo 1 giao dịch mới để bắt đầu";
     const isMoneySubtraction = trade["isMoneySubtraction"];
     const isDebt = trade["isDebt"];
 
@@ -48,7 +49,8 @@ export const Today = () => {
   };
 
   const getList = () =>
-    arr.sort((a, b) => (b[0] - a[0]))
+    arr
+      .sort((a, b) => b[0] - a[0])
       .map((pair, index, arr) => {
         const trade = JSON.parse(pair[1]);
         if (!trade.time) return null;
@@ -62,38 +64,43 @@ export const Today = () => {
               right={(props) => <Text {...props}>{rightContent(trade)}</Text>}
               description={description(trade)}
               onPress={() => {}}
-              style={index === 0 && [styles.latest] }
+              style={index === 0 && [styles.latest]}
             />
           );
-      })
-      ;
-
+      });
   const removeLatest = () => {
     if (dataNum <= 2) return;
-    // check removable
-    // AsyncStorage
-    else
-      AsyncStorage.removeItem(JSON.stringify(dataNum - 1)).then(() => {
-        // lấy giao dịch ngay trước đó
-        AsyncStorage.getItem(JSON.stringify(dataNum - 2)).then((val) => {
-          const trade = JSON.parse(val);
 
-          //lưu vào info
-          AsyncStorage.getItem("0").then((val) => {
-            const info = JSON.parse(val);
-            AsyncStorage.setItem("0", JSON.stringify({
-              ...info,
-              money: trade.balance,
-            })).then(() => {
-              setDataNum(prev => prev - 1)
+    // check removable
+    AsyncStorage.getItem(JSON.stringify(dataNum - 1)).then((valString) => {
+      const latestTrade = JSON.parse(valString);
+      if (!latestTrade.debtID) return;
+      if (latestTrade.debtID && latestTrade.id === latestTrade.debtID)
+        AsyncStorage.removeItem(JSON.stringify(dataNum - 1)).then(() => {
+          // lấy giao dịch ngay trước đó
+          AsyncStorage.getItem(JSON.stringify(dataNum - 2)).then((val) => {
+            const trade = JSON.parse(val);
+
+            //lưu vào info
+            AsyncStorage.getItem("0").then((val) => {
+              const info = JSON.parse(val);
+              AsyncStorage.setItem(
+                "0",
+                JSON.stringify({
+                  ...info,
+                  money: trade.balance,
+                })
+              ).then(() => {
+                setDataNum((prev) => prev - 1);
+              });
             });
           });
         });
-      });
+    });
   };
 
   return (
-    <List.Section title="Hôm nay">
+    <List.Section title="Hôm nay" titleStyle = {[styles.sectionTitle]}>
       <List.Item
         title="Xóa giao dịch mới nhất"
         right={(props) => <List.Icon {...props} icon="trash-can" />}
@@ -105,6 +112,9 @@ export const Today = () => {
 };
 
 const styles = StyleSheet.create({
+  sectionTitle: {
+    color: COLOR_PRIMARY
+  },
   latest: {
     backgroundColor: "#474E68",
   },

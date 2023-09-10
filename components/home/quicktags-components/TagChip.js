@@ -53,7 +53,7 @@ export const TagChip = ({ id, title, cost, isSubtraction, removeChip, }) => {
       ).then(() => {
         setDataNum((prev) => prev + 1);
         navigation.navigate("History");
-        traceData();
+        // traceData();
       });
     });
 

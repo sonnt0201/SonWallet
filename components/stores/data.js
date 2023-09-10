@@ -8,9 +8,9 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     AsyncStorage.getAllKeys().then((keys) => {
       AsyncStorage.multiGet(keys).then((pairs) => {
-        console.log("pair: " + pairs);
+       
         setDataNum(pairs ? pairs.length : 1);
-        console.log("data num " + dataNum);
+      
       });
     });
   }, []);

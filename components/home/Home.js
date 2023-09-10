@@ -46,9 +46,7 @@ export const Home = () => {
     title &&
     cost &&
     AsyncStorage.getItem("0").then((result) => {
-
-      
-
+ 
       const costInNum = cost.replace(/,/g, "")
       setCost(prev => prev.replace(/,/g, ""));
       
@@ -90,7 +88,7 @@ export const Home = () => {
         // setDataNum
         setDataNum(prev => prev + 1)
         navigation.navigate("History")
-        traceData();
+        // traceData();
         
       });
     });

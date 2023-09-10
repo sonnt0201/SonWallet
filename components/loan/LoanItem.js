@@ -95,7 +95,7 @@ const PaidConfirm = ({ item, setPaidConfirm }) => {
         setDataNum((prev) => prev + 1);
         navigation.navigate("History");
 
-        traceData();
+        // traceData();
       });
     }))
 

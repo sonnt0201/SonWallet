@@ -51,7 +51,7 @@ export const QuickTags = () => {
         setTags(info["tags"]);
       })
       .then(() => {
-        traceData();
+        // traceData();
       });
 
   // được gọi mỗi khi tags thay đổi => trong useEffect
@@ -65,7 +65,7 @@ export const QuickTags = () => {
           tags,
         })
       ).then(() => {
-        traceData();
+        // traceData();
       });
     });
 
