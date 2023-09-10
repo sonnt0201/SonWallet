@@ -20,7 +20,7 @@ export const HistoryList = () => {
     getUniqueTimes().then((times) => {
       setUniqueTimesArray(times);
     });
-  }, []);
+  }, [dataNum]);
 
   const renderItem = ({ item }) => (
     isSameDate(today(), new Date(item)) ? <Today/> :
