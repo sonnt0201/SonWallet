@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
-import { DefaultTheme, TextInput, HelperText, Button } from "react-native-paper";
+import {  TextInput, HelperText, Button } from "react-native-paper";
 import { Text } from "react-native-paper";
-import { useState } from "react";
+import { globalTheme } from "../../configs";
 import { themeColor } from "../../constants";
 
 const styles = StyleSheet.create({
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
 
   kdongtag: {
-    color: DefaultTheme.colors.primary,
+    color: globalTheme.colors.primary,
     flex: 1,
     alignItems: "center",
     flexDirection: "row",

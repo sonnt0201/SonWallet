@@ -1,12 +1,13 @@
 import * as React from "react";
 import { useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { DefaultTheme, List, Appbar, Portal } from "react-native-paper";
+import {  List, Appbar, Portal } from "react-native-paper";
+import { globalTheme } from "../../configs";
 import { HistoryList } from "./HistoryList";
 import { Today } from "./Today";
 const styles = StyleSheet.create({
   historyPage: {
-    backgroundColor: DefaultTheme.colors.background,
+    backgroundColor: globalTheme.colors.background,
     height: "100%",
   },
 });

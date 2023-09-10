@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { DefaultTheme, IconButton, List, Surface, Text } from "react-native-paper";
+import {  IconButton, List, Surface, Text } from "react-native-paper";
 import { addCommasToNum, formatDate } from "../../utils";
 import { StyleSheet, View } from "react-native";
 import { useDataNum, useNotification } from "../stores";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { traceData } from "../../utils";
+import { globalTheme } from "../../configs";
 import { COLOR_PRIMARY, notiStrings } from "../../configs";
 export const LoanItem = ({ item }) => {
   const [paidConfirm, setPaidConfirm] = useState(false); // boolean

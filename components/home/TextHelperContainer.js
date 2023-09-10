@@ -5,9 +5,9 @@ export const TextHelperContainer = ({title, cost}) => {
     
     function containsOnlyNumbers(inputString) {
         
-        return (/^\d+$/.test(inputString)) || (inputString.length == 0);
+        return /^[\d,]+$/.test(inputString) || inputString.length === 0;
       }
-
+9
     return <View>
         {(title.length === 0 || cost.length === 0) && (
         <HelperText type="error" visible={true}>

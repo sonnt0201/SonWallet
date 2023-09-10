@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
+import { globalTheme } from "../../../configs";
 import { View, StyleSheet, ScrollView } from "react-native";
 import {
-  Avatar,
-  Button,
-  Card,
-  DefaultTheme,
+
   Text,
   Chip,
   Surface,
-  IconButton,
-  FAB,
-  Modal,
+ 
 } from "react-native-paper";
 
 import { InputModal } from "./InputModal";
@@ -22,7 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 styles = StyleSheet.create({
   quickTags: {
     // justifyContent: "space-between",
-    backgroundColor: DefaultTheme.colors.primary,
+    backgroundColor: globalTheme.colors.primary,
     margin: 5,
   },
   title: {

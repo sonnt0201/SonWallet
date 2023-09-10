@@ -1,6 +1,6 @@
 import { Keyboard, StyleSheet, View, ScrollView } from "react-native";
 import {
-  DefaultTheme,
+ 
   Text,
   TextInput,
   Appbar,
@@ -17,12 +17,12 @@ import { addCommasToNum, traceData } from "../../utils";
 import { useNavigation } from '@react-navigation/native';
 import { useNotification } from "../stores";
 import { notiStrings } from "../../configs";
-
+import { globalTheme } from "../../configs";
 const styles = StyleSheet.create({
   home: {
     paddingBottom: 0,
 
-    backgroundColor: DefaultTheme.colors.background,
+    backgroundColor: globalTheme.colors.background,
     height: "100%",
   },
 

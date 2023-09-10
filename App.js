@@ -1,6 +1,6 @@
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
+import { globalTheme } from "./configs";
 
 import { PaperProvider, DefaultTheme, MD3DarkTheme } from "react-native-paper";
 
@@ -17,16 +17,7 @@ import { COLOR_PRIMARY } from "./configs";
 import { NotiListener } from "./NotiListener";
 
 
- const globalTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: COLOR_PRIMARY
-    // MColors.red300
-    // "#FAD6A5",
-    // ,
-  },
-};
+ 
 // initStorage()
 
 
