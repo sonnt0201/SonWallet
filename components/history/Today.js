@@ -1,13 +1,16 @@
 import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDataNum } from "../stores";
+import { useDataNum, useNotification } from "../stores";
 import { useEffect, useState } from "react";
 import { List, Text } from "react-native-paper";
-import { addCommasToNum, isSameDate, } from "../../utils";
-import { COLOR_PRIMARY } from "../../configs";
+import { addCommasToNum, isSameDate } from "../../utils";
+import { COLOR_PRIMARY, notiStrings } from "../../configs";
 export const Today = () => {
   const [dataNum, setDataNum] = useDataNum();
   const [arr, setArr] = useState([]);
+
+  const [noti, setNoti] = useNotification();
+
   const today = () => {
     const current = new Date();
     return new Date(
@@ -71,10 +74,12 @@ export const Today = () => {
   const removeLatest = () => {
     if (dataNum <= 2) return;
 
-    // check removable
+    // check xem có xóa được không
     AsyncStorage.getItem(JSON.stringify(dataNum - 1)).then((valString) => {
       const latestTrade = JSON.parse(valString);
       if (!latestTrade.debtID) return;
+
+      //Trường hợp xóa được
       if (latestTrade.debtID && latestTrade.id === latestTrade.debtID)
         AsyncStorage.removeItem(JSON.stringify(dataNum - 1)).then(() => {
           // lấy giao dịch ngay trước đó
@@ -92,15 +97,22 @@ export const Today = () => {
                 })
               ).then(() => {
                 setDataNum((prev) => prev - 1);
+                setNoti((prev) => [
+                  ...prev,
+                  { content: notiStrings.TRADE_REMOVE },
+                ]);
               });
             });
           });
         });
+      else { // không xóa được
+        setNoti(prev => [...prev, {content: notiStrings.TRADE_REMOVE_DECLINE, isError: true}])
+      }
     });
   };
 
   return (
-    <List.Section title="Hôm nay" titleStyle = {[styles.sectionTitle]}>
+    <List.Section title="Hôm nay" titleStyle={[styles.sectionTitle]}>
       <List.Item
         title="Xóa giao dịch mới nhất"
         right={(props) => <List.Icon {...props} icon="trash-can" />}
@@ -113,7 +125,7 @@ export const Today = () => {
 
 const styles = StyleSheet.create({
   sectionTitle: {
-    color: COLOR_PRIMARY
+    color: COLOR_PRIMARY,
   },
   latest: {
     backgroundColor: "#474E68",

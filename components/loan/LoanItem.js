@@ -2,11 +2,11 @@ import { useState } from "react";
 import { DefaultTheme, IconButton, List, Surface, Text } from "react-native-paper";
 import { addCommasToNum, formatDate } from "../../utils";
 import { StyleSheet, View } from "react-native";
-import { useDataNum } from "../stores";
+import { useDataNum, useNotification } from "../stores";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { traceData } from "../../utils";
-import { COLOR_PRIMARY } from "../../configs";
+import { COLOR_PRIMARY, notiStrings } from "../../configs";
 export const LoanItem = ({ item }) => {
   const [paidConfirm, setPaidConfirm] = useState(false); // boolean
   const isNotPaid = () => (item.debtID === item.id)
@@ -39,7 +39,7 @@ export const LoanItem = ({ item }) => {
 const PaidConfirm = ({ item, setPaidConfirm }) => {
   const [dataNum, setDataNum] = useDataNum();
   const navigation = useNavigation();
-
+  const [noti, setNoti] = useNotification()
  
   // có 3 function storeTrade, khi sửa 1 func => cần sửa cả 3 func ở : Home, TagChip, LoanItem
   // phải được gọi sau changeOldTrade
@@ -93,11 +93,13 @@ const PaidConfirm = ({ item, setPaidConfirm }) => {
         setPaidConfirm(false);
         // setDataNum
         setDataNum((prev) => prev + 1);
+        setNoti(prev => [...prev, {content: notiStrings.TRADE_ADD + item.title + " (Trả nợ)"}])
         navigation.navigate("History");
-
         // traceData();
       });
-    }))
+    })).catch(error => {
+      setNoti(prev => [...prev, {content: notiStrings.ERROR, isError: true}])
+    })
 
     
   }

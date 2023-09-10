@@ -15,6 +15,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDataNum } from "../stores";
 import { addCommasToNum, traceData } from "../../utils";
 import { useNavigation } from '@react-navigation/native';
+import { useNotification } from "../stores";
+import { notiStrings } from "../../configs";
 
 const styles = StyleSheet.create({
   home: {
@@ -39,7 +41,7 @@ export const Home = () => {
   
   const [dataNum, setDataNum] = useDataNum();
   const navigation = useNavigation();
- 
+  const [noti, setNoti] = useNotification()
   // Được truyền xuống Categories để các button ở categories xử lý với từng gtri isMoneySubtraction, isDebt
   // có 3 function storeTrade, khi sửa 1 func => cần sửa cả 3 func ở : Home, TagChip, LoanItem
   const storeTrade = ({ isMoneySubtraction, isDebt }) =>
@@ -83,13 +85,18 @@ export const Home = () => {
           // debtID === id => chưa trả, debtID !== id => đã trả và debtID liên kết tới giao dịch trả
         })
       ).then(() => {
+
+        setNoti(prev => [...prev, {content: notiStrings.TRADE_ADD + title}])
         setCost("")
         setTitle("")
         // setDataNum
         setDataNum(prev => prev + 1)
         navigation.navigate("History")
+        
         // traceData();
         
+      }).catch(error => {
+        setNoti(prev => [...prev, {content: notiStrings.ERROR, isError : false}])
       });
     });
 

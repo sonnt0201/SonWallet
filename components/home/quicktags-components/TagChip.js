@@ -1,14 +1,15 @@
 import { View } from "react-native";
 import { Chip } from "react-native-paper";
 import { addCommasToNum } from "../../../utils";
-import { useDataNum } from "../../stores";
+import { useDataNum, useNotification } from "../../stores";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { traceData } from "../../../utils";
+import { notiStrings } from "../../../configs/noti";
+
 export const TagChip = ({ id, title, cost, isSubtraction, removeChip, }) => {
   const [dataNum, setDataNum] = useDataNum();
   const navigation = useNavigation();
-
+  const [noti, setNoti] = useNotification();
   // thêm giao dịch được đặt trong tag chip, tương tự thêm giao dịch ở Home
   // // có 3 function storeTrade, khi sửa 1 func => cần sửa cả 3 func ở : Home, TagChip, LoanItem
   const storeTrade = () =>
@@ -52,8 +53,12 @@ export const TagChip = ({ id, title, cost, isSubtraction, removeChip, }) => {
         })
       ).then(() => {
         setDataNum((prev) => prev + 1);
+        setNoti(prev => [...prev, {content: notiStrings.TRADE_ADD + title}])
         navigation.navigate("History");
+
         // traceData();
+      }).catch(error => {
+        setNoti(prev => [...prev, {content: notiStrings.ERROR, isError: true}])
       });
     });
 

@@ -16,7 +16,8 @@ import {
 import { InputModal } from "./InputModal";
 import { TagChip } from "./TagChip";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { traceData } from "../../../utils";
+
+
 
 styles = StyleSheet.create({
   quickTags: {
@@ -42,7 +43,7 @@ styles = StyleSheet.create({
 export const QuickTags = () => {
   const [tags, setTags] = useState([]);
   const [inputVisible, setInputVisible] = useState(false);
-
+  
   // lấy tags từ storage khi mở ứng dụng
   const getTagsFromStorage = () =>
     AsyncStorage.getItem("0")

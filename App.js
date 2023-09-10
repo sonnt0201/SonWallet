@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { initStorage, traceData } from "./utils";
 import { AppHeader } from "./AppHeader";
 import { COLOR_PRIMARY } from "./configs";
+import { NotiListener } from "./NotiListener";
 
 
  const globalTheme = {
@@ -42,6 +43,7 @@ export default function App() {
         <StoresProvider>
             <AppHeader/>
             <BottomBar />
+            <NotiListener/>
             <MoneyListener/>
         </StoresProvider>
       </SafeAreaProvider>
