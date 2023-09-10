@@ -4,10 +4,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LoanItem } from "./LoanItem";
 import { List, Text } from "react-native-paper";
 import { useDataNum } from "../stores";
+import { COLOR_PRIMARY } from "../../configs";
 
 export const LoanList = () => {
   const [debtTrades, setDebtTrades] = useState([]);
-  const [dataNum, ] = useDataNum()
+  const [dataNum] = useDataNum();
   useEffect(() => {
     // Retrieve data from AsyncStorage
     AsyncStorage.getAllKeys()
@@ -17,8 +18,8 @@ export const LoanList = () => {
 
         // Filter and sort the trades
         const debtTradesSorted = parsedData
-          .filter((trade) => trade.isDebt === true).sort((a, b) => b.id - a.id)
-          
+          .filter((trade) => trade.isDebt === true)
+          .sort((a, b) => b.id - a.id);
 
         setDebtTrades(debtTradesSorted);
       })
@@ -30,22 +31,24 @@ export const LoanList = () => {
   return (
     <View>
       {/* <List.Section title={"(nhấn vào các khoản nợ để xác nhận trả)"}> */}
-        <FlatList
-          data={debtTrades}
-          keyExtractor={(item, index) => `${item.title}-${index}`}
-          renderItem={({ item }) => <LoanItem item={item} />}
-          ListHeaderComponent={() => <Text style = {[styles.header]}>Nhấn vào các khoản nợ để xác nhận trả</Text>}
-        />
+      <FlatList
+        data={debtTrades}
+        keyExtractor={(item, index) => `${item.title}-${index}`}
+        renderItem={({ item }) => <LoanItem item={item} />}
+        ListHeaderComponent={() => (
+          <Text style={[styles.header]}>
+            Nhấn vào các khoản nợ để xác nhận trả
+          </Text>
+        )}
+      />
       {/* </List.Section> */}
     </View>
   );
 };
 
-
 const styles = StyleSheet.create({
   header: {
-     marginHorizontal: 10,
-  color: "#FAD6A5",
-  }
- 
-})
+    marginHorizontal: 10,
+    color: COLOR_PRIMARY,
+  },
+});

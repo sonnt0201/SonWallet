@@ -1,0 +1,1 @@
+export  { COLOR_PRIMARY } from "./colors"

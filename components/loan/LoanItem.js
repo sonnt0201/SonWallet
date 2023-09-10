@@ -6,6 +6,7 @@ import { useDataNum } from "../stores";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { traceData } from "../../utils";
+import { COLOR_PRIMARY } from "../../configs";
 export const LoanItem = ({ item }) => {
   const [paidConfirm, setPaidConfirm] = useState(false); // boolean
   const isNotPaid = () => (item.debtID === item.id)
@@ -129,7 +130,7 @@ const PaidConfirm = ({ item, setPaidConfirm }) => {
 
 const styles = StyleSheet.create({
   tick : {
-    color: "#FAD6A5"
+    color: COLOR_PRIMARY
   },
 
   cancel: {

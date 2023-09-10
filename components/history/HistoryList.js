@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUniqueTimes, isSameDate } from "../../utils";
 import { List, Text } from "react-native-paper";
 import { DayList } from "./DayList";
-import { formatDate } from "../../utils";
+
 import { Today } from "./Today";
 import { useDataNum } from "../stores";
 export const HistoryList = () => {

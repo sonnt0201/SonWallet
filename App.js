@@ -13,13 +13,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { initStorage, traceData } from "./utils";
 import { AppHeader } from "./AppHeader";
+import { COLOR_PRIMARY } from "./configs";
 
 
  const globalTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: "#FAD6A5"
+    primary: COLOR_PRIMARY
     // MColors.red300
     // "#FAD6A5",
     // ,
