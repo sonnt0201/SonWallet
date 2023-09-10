@@ -60,7 +60,7 @@ export const DayList = ({date}) => {
       
         
         );
-    }).reverse();
+    });
 
  
 
