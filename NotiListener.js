@@ -19,7 +19,7 @@ export const NotiListener = () => {
             // Automatically hide the Snackbar after 5 seconds
             const timer = setTimeout(() => {
               setNotiVisible(false);
-            }, 5000);
+            }, 4000);
         
             return () => {
               clearTimeout(timer); // Clear the timer when component unmounts or notifications change again

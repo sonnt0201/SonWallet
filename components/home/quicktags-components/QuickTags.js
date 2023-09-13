@@ -1,28 +1,24 @@
 import { useEffect, useState } from "react";
-import { globalTheme } from "../../../configs";
+import { COLOR_PRIMARY, globalTheme } from "../../../configs";
 import { View, StyleSheet, ScrollView } from "react-native";
-import {
-
-  Text,
-  Chip,
-  Surface,
- 
-} from "react-native-paper";
+import { Text, Chip, Surface, IconButton } from "react-native-paper";
 
 import { InputModal } from "./InputModal";
 import { TagChip } from "./TagChip";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-
 
 styles = StyleSheet.create({
   quickTags: {
     // justifyContent: "space-between",
     backgroundColor: globalTheme.colors.primary,
     margin: 5,
+    
   },
   title: {
-    margin: 10,
+    marginLeft: 10,
+    flexDirection: "row",
+    alignItems: "center"
+    // height: 40
   },
   chipContainer: {
     padding: 5,
@@ -39,7 +35,7 @@ styles = StyleSheet.create({
 export const QuickTags = () => {
   const [tags, setTags] = useState([]);
   const [inputVisible, setInputVisible] = useState(false);
-  
+  const [tipVisible, setTipVisible] = useState(false)
   // lấy tags từ storage khi mở ứng dụng
   const getTagsFromStorage = () =>
     AsyncStorage.getItem("0")
@@ -71,6 +67,18 @@ export const QuickTags = () => {
   }, []);
 
   useEffect(() => {
+    if (tipVisible === true) {
+      const timeout = setTimeout(() => {
+        setTipVisible(false)
+      },4000)
+
+      return () => {clearTimeout(timeout)}
+    }
+
+   
+  }, [tipVisible]);
+
+  useEffect(() => {
     saveTagsToStorage();
   }, [tags]);
 
@@ -91,8 +99,22 @@ export const QuickTags = () => {
   return (
     <Surface styles={[styles.quickTags]} elevation={5}>
       <View style={[styles.title]}>
-        <Text icon="tags-mutiple">QuickTags</Text>
+        <Text
+        
+        >
+          {" "}
+          QuickTags{" "}
+        </Text>
+        <IconButton
+          icon="information-outline"
+          iconColor={COLOR_PRIMARY}
+          size={20}
+          onPress={() => setTipVisible(!tipVisible)}
+         
+        />
+        {tipVisible && <Text style = {{fontSize: 10, color: COLOR_PRIMARY}}>Mẹo: nhấn giữ một tag để xóa</Text>}
       </View>
+      
       {inputVisible && (
         <InputModal
           setTags={setTags}

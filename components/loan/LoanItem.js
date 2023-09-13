@@ -26,7 +26,7 @@ export const LoanItem = ({ item }) => {
                 addCommasToNum(item.cost) +
                 " Đ"}
             </Text>
-            <Text >{item.debtID === item.id ? "Chưa trả" : "Đã trả"}</Text>
+            <Text style = {{color: isNotPaid() ? COLOR_PRIMARY : "white"}}>{item.debtID === item.id ? "Chưa trả" : "Đã trả"}</Text>
           </View>
         )}
       />
