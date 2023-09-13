@@ -3,6 +3,7 @@ import {  TextInput, HelperText, Button } from "react-native-paper";
 import { Text } from "react-native-paper";
 import { globalTheme } from "../../configs";
 import { themeColor } from "../../constants";
+import { useRef } from "react";
 
 const styles = StyleSheet.create({
   container: {
@@ -48,6 +49,8 @@ export const InputField = ({
   labelForTextInput
 }) => {
 
+  const costInputRef = useRef(null)
+
   const formatCostValue = (value) => {
     // Remove existing commas and non-numeric characters
     const cleanedValue = value.replace(/[^\d]/g, "");
@@ -75,11 +78,15 @@ export const InputField = ({
           autoFocus={true}
           ref={inputRef}
           value={title}
-          multiline
+          multiline={false}
+        
+          returnKeyType="next"
+          onSubmitEditing={() => costInputRef.current.focus()}
           onChangeText={text => {
             setTitle(text)
             // console.log(text)
           }}
+
         />
       </View>
 
@@ -94,6 +101,7 @@ export const InputField = ({
           keyboardType="numeric"
           value={cost}
           onChangeText={handleCostChange}
+          ref={costInputRef}
         />
       </View>
       <View key={"kdong-tag-container"}

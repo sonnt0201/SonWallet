@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { List, Text } from "react-native-paper";
 import { addCommasToNum, isSameDate } from "../../utils";
 import { COLOR_PRIMARY, notiStrings } from "../../configs";
+import { TradeItem } from "./TradeItem";
 export const Today = () => {
   const [dataNum, setDataNum] = useDataNum();
   const [arr, setArr] = useState([]);
@@ -46,10 +47,7 @@ export const Today = () => {
     return "Vay";
   };
 
-  const styleForLatestItem = (index) => {
-    if (index === dataNum - 1) return styles.latest;
-    return [];
-  };
+
 
   const getList = () =>
     arr
@@ -61,14 +59,7 @@ export const Today = () => {
 
         if (isSameDate(time, today()))
           return (
-            <List.Item
-              key={pair[0]}
-              title={trade["title"]}
-              right={(props) => <Text {...props}>{rightContent(trade)}</Text>}
-              description={description(trade)}
-              onPress={() => {}}
-              style={index === 0 && [styles.latest]}
-            />
+            <TradeItem keyVal={pair[0]} trade={trade} isLatest={index === 0} />
           );
       });
   const removeLatest = () => {
